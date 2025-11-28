@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zorgsysteem - Rollen</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">Zorg<span>Systeem</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#">Instellingen</a></li>
+                    <li><a href="#">Help</a></li>
+                    <li><a href="#">Uitloggen</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="role-selector">
+            <div class="role-tabs">
+                <button class="role-tab active" data-role="admin">Admin</button>
+                <button class="role-tab" data-role="planner">Planner</button>
+                <button class="role-tab" data-role="zorgpersoneel">Zorgpersoneel</button>
+            </div>
+        </div>
+
+        <!-- Admin Dashboard -->
+        <div id="admin-content" class="role-content active">
+            <div class="dashboard-header">
+                <h1 class="dashboard-title">Admin Dashboard</h1>
+                <div>
+                    <button class="btn btn-success">Nieuwe Gebruiker</button>
+                    <button class="btn">Rapportage</button>
+                </div>
+            </div>
+
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-value">142</div>
+                    <div class="stat-label">Totaal Cliënten</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">28</div>
+                    <div class="stat-label">Totaal Medewerkers</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">63</div>
+                    <div class="stat-label">Routes Vandaag</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">4</div>
+                    <div class="stat-label">Nieuwe Aanvragen</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Cliëntenbeheer</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Naam</th>
+                            <th>Geboortedatum</th>
+                            <th>Adres</th>
+                            <th>Zorgnummer</th>
+                            <th>Acties</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Jan Jansen</td>
+                            <td>15-03-1955</td>
+                            <td>Kerkstraat 123, Amsterdam</td>
+                            <td>ZN-123456</td>
+                            <td>
+                                <button class="btn">Bekijken</button>
+                                <button class="btn">Bewerken</button>
+                                <button class="btn btn-danger">Verwijderen</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Maria de Vries</td>
+                            <td>22-07-1948</td>
+                            <td>Dorpsweg 45, Utrecht</td>
+                            <td>ZN-123457</td>
+                            <td>
+                                <button class="btn">Bekijken</button>
+                                <button class="btn">Bewerken</button>
+                                <button class="btn btn-danger">Verwijderen</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Peter Bakker</td>
+                            <td>03-11-1962</td>
+                            <td>Beukenlaan 67, Rotterdam</td>
+                            <td>ZN-123458</td>
+                            <td>
+                                <button class="btn">Bekijken</button>
+                                <button class="btn">Bewerken</button>
+                                <button class="btn btn-danger">Verwijderen</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="btn btn-success">Cliënt Toevoegen</button>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Personeelsbeheer</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Naam</th>
+                            <th>Rol</th>
+                            <th>E-mail</th>
+                            <th>Acties</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Lisa van Dijk</td>
+                            <td>Admin</td>
+                            <td>l.vandijk@zorgsysteem.nl</td>
+                            <td>
+                                <button class="btn">Bewerken</button>
+                                <button class="btn">Wachtwoord Reset</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Mark de Jong</td>
+                            <td>Planner</td>
+                            <td>m.dejong@zorgsysteem.nl</td>
+                            <td>
+                                <button class="btn">Bewerken</button>
+                                <button class="btn">Wachtwoord Reset</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Sanne Visser</td>
+                            <td>Zorgpersoneel</td>
+                            <td>s.visser@zorgsysteem.nl</td>
+                            <td>
+                                <button class="btn">Bewerken</button>
+                                <button class="btn">Wachtwoord Reset</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="btn btn-success">Medewerker Toevoegen</button>
+            </div>
+        </div>
+
+        <!-- Planner Dashboard -->
+        <div id="planner-content" class="role-content">
+            <div class="dashboard-header">
+                <h1 class="dashboard-title">Planner Dashboard</h1>
+                <div>
+                    <button class="btn btn-success">Nieuwe Route</button>
+                    <button class="btn">Planning Exporteren</button>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Planning Overzicht - Vandaag</h2>
+                <div class="form-group">
+                    <label for="planning-date">Selecteer Datum:</label>
+                    <input type="date" id="planning-date" class="form-control" value="2023-11-15">
+                </div>
+
+                <div class="client-card">
+                    <div class="client-name">Sanne Visser</div>
+                    <div class="client-details">
+                        <div><strong>Rol:</strong> Zorgpersoneel</div>
+                        <div><strong>Aantal cliënten vandaag:</strong> 5</div>
+                        <div><strong>Starttijd:</strong> 08:30</div>
+                    </div>
+                    <div>
+                        <strong>Cliënten:</strong>
+                        <ul style="margin-top: 10px; margin-left: 20px;">
+                            <li>Jan Jansen (09:00 - 10:30)</li>
+                            <li>Maria de Vries (11:00 - 12:00)</li>
+                            <li>Peter Bakker (13:30 - 14:45)</li>
+                            <li>Eva Smit (15:15 - 16:30)</li>
+                            <li>Klaas de Wit (17:00 - 18:00)</li>
+                        </ul>
+                    </div>
+                    <div class="client-actions" style="margin-top: 15px;">
+                        <button class="btn">Route Bewerken</button>
+                        <button class="btn">Details</button>
+                    </div>
+                </div>
+
+                <div class="client-card">
+                    <div class="client-name">Thomas Jansen</div>
+                    <div class="client-details">
+                        <div><strong>Rol:</strong> Zorgpersoneel</div>
+                        <div><strong>Aantal cliënten vandaag:</strong> 4</div>
+                        <div><strong>Starttijd:</strong> 08:00</div>
+                    </div>
+                    <div>
+                        <strong>Cliënten:</strong>
+                        <ul style="margin-top: 10px; margin-left: 20px;">
+                            <li>Anna de Boer (08:30 - 10:00)</li>
+                            <li>Henk van Dam (10:30 - 12:00)</li>
+                            <li>Lisa Koster (13:00 - 14:30)</li>
+                            <li>Paul de Groot (15:00 - 16:00)</li>
+                        </ul>
+                    </div>
+                    <div class="client-actions" style="margin-top: 15px;">
+                        <button class="btn">Route Bewerken</button>
+                        <button class="btn">Details</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Route Aanmaken/Bewerken</h2>
+                <div class="route-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="route-date">Datum</label>
+                            <input type="date" id="route-date" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="caregiver">Zorgmedewerker</label>
+                            <select id="caregiver" class="form-control">
+                                <option value="">Selecteer zorgmedewerker</option>
+                                <option value="1">Sanne Visser</option>
+                                <option value="2">Thomas Jansen</option>
+                                <option value="3">Emma de Bruin</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="clients">Cliënten (selecteer één of meerdere)</label>
+                        <select id="clients" class="form-control" multiple style="height: 120px;">
+                            <option value="1">Jan Jansen</option>
+                            <option value="2">Maria de Vries</option>
+                            <option value="3">Peter Bakker</option>
+                            <option value="4">Eva Smit</option>
+                            <option value="5">Klaas de Wit</option>
+                            <option value="6">Anna de Boer</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-success">Route Opslaan</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Zorgpersoneel Dashboard -->
+        <div id="zorgpersoneel-content" class="role-content">
+            <div class="dashboard-header">
+                <h1 class="dashboard-title">Zorgpersoneel Dashboard</h1>
+                <div>
+                    <button class="btn btn-success">Nieuwe Rapportage</button>
+                    <button class="btn">Meting Registreren</button>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Mijn Planning - Vandaag</h2>
+                <div class="client-card">
+                    <div class="client-name">Jan Jansen</div>
+                    <div class="client-details">
+                        <div><strong>Tijd:</strong> 09:00 - 10:30</div>
+                        <div><strong>Adres:</strong> Kerkstraat 123, Amsterdam</div>
+                    </div>
+                    <div class="client-actions">
+                        <button class="btn">Dossier Bekijken</button>
+                        <button class="btn">Rapportage Toevoegen</button>
+                    </div>
+                </div>
+
+                <div class="client-card">
+                    <div class="client-name">Maria de Vries</div>
+                    <div class="client-details">
+                        <div><strong>Tijd:</strong> 11:00 - 12:00</div>
+                        <div><strong>Adres:</strong> Dorpsweg 45, Utrecht</div>
+                    </div>
+                    <div class="client-actions">
+                        <button class="btn">Dossier Bekijken</button>
+                        <button class="btn">Rapportage Toevoegen</button>
+                    </div>
+                </div>
+
+                <div class="client-card">
+                    <div class="client-name">Peter Bakker</div>
+                    <div class="client-details">
+                        <div><strong>Tijd:</strong> 13:30 - 14:45</div>
+                        <div><strong>Adres:</strong> Beukenlaan 67, Rotterdam</div>
+                    </div>
+                    <div class="client-actions">
+                        <button class="btn">Dossier Bekijken</button>
+                        <button class="btn">Rapportage Toevoegen</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Cliënt Dossier - Jan Jansen</h2>
+                <div class="client-details" style="margin-bottom: 20px;">
+                    <div><strong>Geboortedatum:</strong> 15-03-1955</div>
+                    <div><strong>Zorgnummer:</strong> ZN-123456</div>
+                    <div><strong>Contactpersoon:</strong> Dochter - 06-12345678</div>
+                </div>
+
+                <h3 style="margin-bottom: 15px;">Vorige Rapportages</h3>
+                <div class="report-item">
+                    <div class="report-date">14-11-2023 10:15</div>
+                    <div>Cliënt was vandaag in goede stemming. Heeft goed ontbeten. Bloeddruk was 135/85. Medicatie volgens voorschrift ingenomen.</div>
+                </div>
+                <div class="report-item">
+                    <div class="report-date">13-11-2023 10:30</div>
+                    <div>Cliënt klaagde over hoofdpijn. Heeft rustig aan gedaan. Bloeddruk was 140/90. Extra rustpauze ingelast.</div>
+                </div>
+                <div class="report-item">
+                    <div class="report-date">12-11-2023 09:45</div>
+                    <div>Normale dag. Cliënt heeft kleine wandeling gemaakt. Geen bijzonderheden te melden.</div>
+                </div>
+
+                <h3 style="margin: 20px 0 15px 0;">Vorige Metingen</h3>
+                <div class="measurement-chart">
+                    <div class="chart-placeholder">
+                        Grafiek met metingen (bloeddruk, gewicht, etc.)
+                    </div>
+                </div>
+
+                <div class="route-form">
+                    <h3 style="margin-bottom: 15px;">Nieuwe Rapportage Toevoegen</h3>
+                    <div class="form-group">
+                        <label for="report-date">Datum/Tijd</label>
+                        <input type="datetime-local" id="report-date" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="report-text">Rapportage</label>
+                        <textarea id="report-text" class="form-control" rows="5" placeholder="Voeg hier uw rapportage toe..."></textarea>
+                    </div>
+                    <button class="btn btn-success">Rapportage Opslaan</button>
+                </div>
+
+                <div class="route-form" style="margin-top: 30px;">
+                    <h3 style="margin-bottom: 15px;">Meting Registreren</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="measurement-date">Datum/Tijd</label>
+                            <input type="datetime-local" id="measurement-date" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="measurement-type">Type Meting</label>
+                            <select id="measurement-type" class="form-control">
+                                <option value="">Selecteer type</option>
+                                <option value="blood-pressure">Bloeddruk</option>
+                                <option value="glucose">Glucose</option>
+                                <option value="weight">Gewicht</option>
+                                <option value="temperature">Temperatuur</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="measurement-value">Waarde</label>
+                        <input type="text" id="measurement-value" class="form-control" placeholder="Bijv. 120/80 of 75 kg">
+                    </div>
+                    <button class="btn btn-success">Meting Opslaan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.role-tab');
+            const contents = document.querySelectorAll('.role-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active class from all tabs and contents
+                    tabs.forEach(t => t.classList.remove('active'));
+                    contents.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    tab.classList.add('active');
+                    
+                    // Show corresponding content
+                    const role = tab.getAttribute('data-role');
+                    document.getElementById(`${role}-content`).classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

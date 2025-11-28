@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zorgsysteem - Home</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">Zorg<span>Systeem</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index2.html">Dashboard</a></li>
+                    <li><a href="#">Over ons</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Welkom bij het Zorgsysteem</h1>
+            <p>Een geïntegreerd platform voor zorgplanning, cliëntbeheer en zorgverlening</p>
+        </div>
+    </section>
+
+    <section class="roles-section">
+        <div class="container">
+            <h2 class="section-title">Kies uw rol</h2>
+            <div class="roles-container">
+                @auth
+                    {{-- Admin - alleen zichtbaar voor admins --}}
+                    @if(auth()->user()->is_admin)
+                        <div class="role-card">
+                            <div class="role-icon">👨‍💼</div>
+                            <h3>Admin</h3>
+                            <p>Beheer gebruikers, cliënten en personeel. Volledige toegang tot het systeem.</p>
+                            <a href="index2.html" class="btn">Naar Adminscherm</a>
+                        </div>
+                    @endif
+
+                    {{-- Planner - zichtbaar voor admin en planner --}}
+                    @if(auth()->user()->is_admin || auth()->user()->is_planner)
+                        <div class="role-card">
+                            <div class="role-icon">📅</div>
+                            <h3>Planner</h3>
+                            <p>Beheer planningen, routes en koppel zorgpersoneel aan cliënten.</p>
+                            <a href="index2.html" class="btn">Naar Planner</a>
+                        </div>
+                    @endif
+
+                    {{-- Zorgpersoneel - zichtbaar voor admin, planner en personeel --}}
+                    @if(auth()->user()->is_admin || auth()->user()->is_planner || auth()->user()->is_personeel)
+                        <div class="role-card">
+                            <div class="role-icon">👩‍⚕️</div>
+                            <h3>Zorgpersoneel</h3>
+                            <p>Bekijk planning, cliëntendossiers en registreer rapportages en metingen.</p>
+                            <a href="index2.html" class="btn">Naar Zorgpersoneel</a>
+                        </div>
+                    @endif
+
+                    {{-- Client - zichtbaar voor alle ingelogde gebruikers --}}
+                    @auth
+                        <div class="role-card">
+                            <div class="role-icon">👤</div>
+                            <h3>Client</h3>
+                            <p>Bekijk je roosters en planningen</p>
+                            <a href="index2.html" class="btn">Naar Clientrooster</a>
+                        </div>
+                    @endauth
+
+                @else
+                    {{-- Uitgelogde gebruikers - alleen deze blok --}}
+                    <div class="role-card">
+                        <div class="role-icon">🔒</div>
+                        <h3>Inloggen</h3>
+                        <p>Log in om toegang te krijgen tot uw rol-specifieke dashboard.</p>
+                        <a href="index2.html" class="btn">Inloggen</a>
+                    </div>
+                @endauth
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Systeemfunctionaliteiten</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">👥</div>
+                    <h3>Cliëntenbeheer</h3>
+                    <p>Beheer alle cliëntgegevens op een centrale locatie</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📊</div>
+                    <h3>Planning</h3>
+                    <p>Eenvoudige planning van zorgroutes en personeel</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📝</div>
+                    <h3>Rapportages</h3>
+                    <p>Volledige rapportage en documentatie van zorg</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">💊</div>
+                    <h3>Metingen</h3>
+                    <p>Registreer en volg medische metingen van cliënten</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p>Email: info@zorgsysteem.nl</p>
+                    <p>Telefoon: 0800-ZORGSYS</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Links</h3>
+                    <p><a href="#" style="color: #fff;">Privacybeleid</a></p>
+                    <p><a href="#" style="color: #fff;">Gebruiksvoorwaarden</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Ondersteuning</h3>
+                    <p>Helpdesk: 9:00 - 17:00</p>
+                    <p>Technische ondersteuning</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 ZorgSysteem. Alle rechten voorbehouden.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
