@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planner Dashboard - ZorgSysteem</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        /* Logo image styling */
+        .logo-img {
+            height: 2.5rem;
+            width: auto;
+            margin-right: 0.75rem;
+            object-fit: contain;
+        }
+        
+        /* Responsive logo adjustments */
+        @media (max-width: 640px) {
+            .logo-img {
+                height: 2rem; /* Slightly smaller on mobile */
+                margin-right: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <!-- Top Navigation Bar -->
+    <nav class="bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <!-- Left: Logo -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <img class="logo-img" src="ZorgSysteem_logo.png" alt="ZorgSysteem logo">
+                        <span class="text-xl font-bold text-gray-900">ZorgSysteem</span>
+                    </div>
+                </div>
+                
+                <!-- Right: Profile & Actions -->
+                <div class="flex items-center space-x-4">                    
+                    <!-- Profile -->
+                    <div class="relative">
+                        <button class="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            <span class="sr-only">Open user menu</span>
+                            <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
+                                <i class="fa fa-user text-blue-600"></i>
+                            </div>
+                            <span class="ml-2 hidden md:block">Mark de Jong</span>
+                            <i class="fa fa-chevron-down ml-2 text-gray-400 hidden md:block"></i>
+                        </button>
+                    </div>                  
+                    
+                    <!-- Logout Button -->
+                    <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700">
+                        <i class="fa fa-sign-out-alt mr-2"></i>Uitloggen
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <!-- Planner Dashboard -->
+        <div class="fade-in">
+            <div class="px-4 py-6 sm:px-0">
+                <!-- Dashboard Title -->
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900">Planner Dashboard</h1>
+                    <p class="text-gray-600 mt-2">Beheer planning en routes voor zorgpersoneel</p>
+                </div>
+                
+                <!-- Routes Overview -->
+                <div class="bg-white shadow overflow-hidden sm:rounded-md mb-8">
+                    <div class="px-4 py-5 sm:px-6 flex justify-between items-center">
+                        <div>
+                            <h3 class="text-lg leading-6 font-medium text-gray-900">Routes Overzicht</h3>
+                            <p class="mt-1 max-w-2xl text-sm text-gray-500">Direct overzicht van aangemaakte routes</p>
+                        </div>
+                        <button id="new-route-btn" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700">
+                            <i class="fa fa-plus-circle mr-2"></i>Nieuwe route
+                        </button>
+                    </div>
+                    
+                    <!-- Date Filter -->
+                    <div class="px-4 py-3 bg-gray-50 border-t border-b border-gray-200">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                            <div class="mb-4 md:mb-0">
+                                <label for="route-date-filter" class="block text-sm font-medium text-gray-700">Filter op datum</label>
+                                <input type="date" id="route-date-filter" class="mt-1 block w-full md:w-auto border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" value="2023-11-15">
+                            </div>
+                            <div>
+                                <button class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                                    <i class="fa fa-history mr-2"></i>Oude routes bekijken
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Routes List -->
+                    <div class="divide-y divide-gray-200">
+                        <!-- Route 1 -->
+                        <div class="px-4 py-4 sm:px-6 hover:bg-gray-50">
+                            <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                                <div class="mb-4 md:mb-0">
+                                    <div class="flex items-center">
+                                        <div class="h-10 w-10 flex-shrink-0 rounded-full bg-yellow-100 flex items-center justify-center mr-3">
+                                            <i class="fa fa-user-md text-yellow-600"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-lg font-medium text-gray-900">Route: Sanne Visser</h4>
+                                            <div class="mt-1 flex flex-wrap gap-2">
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                                    <i class="fa fa-user-md mr-1"></i>Zorgpersoneel
+                                                </span>
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                                    <i class="fa fa-calendar mr-1"></i>15-11-2023
+                                                </span>
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+                                                    <i class="fa fa-sun-o mr-1"></i>Ochtend
+                                                </span>
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                                                    <i class="fa fa-clock-o mr-1"></i>08:30 - 13:00
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-3 ml-13">
+                                        <p class="text-sm text-gray-600">
+                                            <i class="fa fa-user-edit mr-1"></i>Aangemaakt door: Mark de Jong
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="flex space-x-3">
+                                    <button class="inline-flex items-center px-3 py-1.5 border border-blue-300 text-sm font-medium rounded-md text-blue-700 bg-blue-50 hover:bg-blue-100">
+                                        <i class="fa fa-edit mr-1.5"></i>Bewerken
+                                    </button>
+                                    <button class="inline-flex items-center px-3 py-1.5 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                        <i class="fa fa-info-circle mr-1.5"></i>Details
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Route 2 -->
+                        <div class="px-4 py-4 sm:px-6 hover:bg-gray-50">
+                            <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                                <div class="mb-4 md:mb-0">
+                                    <div class="flex items-center">
+                                        <div class="h-10 w-10 flex-shrink-0 rounded-full bg-yellow-100 flex items-center justify-center mr-3">
+                                            <i class="fa fa-user-md text-yellow-600"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-lg font-medium text-gray-900">Route: Thomas Jansen</h4>
+                                            <div class="mt-1 flex flex-wrap gap-2">
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                                    <i class="fa fa-user-md mr-1"></i>Zorgpersoneel
+                                                </span>
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                                    <i class="fa fa-calendar mr-1"></i>15-11-2023
+                                                </span>
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+                                                    <i class="fa fa-moon-o mr-1"></i>Avond
+                                                </span>
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                                                    <i class="fa fa-clock-o mr-1"></i>14:00 - 18:30
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-3 ml-13">
+                                        <p class="text-sm text-gray-600">
+                                            <i class="fa fa-user-edit mr-1"></i>Aangemaakt door: Mark de Jong
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="flex space-x-3">
+                                    <button class="inline-flex items-center px-3 py-1.5 border border-blue-300 text-sm font-medium rounded-md text-blue-700 bg-blue-50 hover:bg-blue-100">
+                                        <i class="fa fa-edit mr-1.5"></i>Bewerken
+                                    </button>
+                                    <button class="inline-flex items-center px-3 py-1.5 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                        <i class="fa fa-info-circle mr-1.5"></i>Details
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- New Route Form (Hidden by default) -->
+                <div id="new-route-form" class="hidden bg-white shadow overflow-hidden sm:rounded-md mb-8">
+                    <div class="px-4 py-5 sm:px-6 border-b border-gray-200">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900">Nieuwe route aanmaken</h3>
+                        <p class="mt-1 text-sm text-gray-500">Vul de gegevens in om een nieuwe route te maken</p>
+                    </div>
+                    <div class="px-4 py-5 sm:p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="caregiver-select" class="block text-sm font-medium text-gray-700">Zorgmedewerker *</label>
+                                <select id="caregiver-select" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                    <option value="">Selecteer zorgmedewerker</option>
+                                    <option value="1">Sanne Visser</option>
+                                    <option value="2">Thomas Jansen</option>
+                                    <option value="3">Emma de Bruin</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="route-date" class="block text-sm font-medium text-gray-700">Datum *</label>
+                                <input type="date" id="route-date" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            </div>
+                            <div>
+                                <label for="route-shift" class="block text-sm font-medium text-gray-700">Shift *</label>
+                                <select id="route-shift" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                    <option value="ochtend">Ochtend</option>
+                                    <option value="avond">Avond</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="route-time-start" class="block text-sm font-medium text-gray-700">Starttijd *</label>
+                                <input type="time" id="route-time-start" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" value="08:30">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label for="clients-select" class="block text-sm font-medium text-gray-700">Cliënten selecteren *</label>
+                                <select id="clients-select" multiple class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm h-32">
+                                    <option value="1">Jan Jansen (Kerkstraat 123, Amsterdam)</option>
+                                    <option value="2">Maria de Vries (Dorpsweg 45, Utrecht)</option>
+                                    <option value="3">Peter Bakker (Beukenlaan 67, Rotterdam)</option>
+                                    <option value="4">Eva Smit (Molenstraat 89, Den Haag)</option>
+                                    <option value="5">Klaas de Wit (Dijkweg 12, Groningen)</option>
+                                </select>
+                                <p class="mt-1 text-sm text-gray-500">Houd Ctrl toets ingedrukt om meerdere cliënten te selecteren</p>
+                            </div>
+                        </div>
+                        <div class="mt-6 flex justify-end space-x-3">
+                            <button type="button" id="cancel-new-route" class="py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Annuleren</button>
+                            <button type="button" class="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">Route aanmaken</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const newRouteForm = document.getElementById('new-route-form');
+            
+            // New Route Form Toggle
+            const newRouteBtn = document.getElementById('new-route-btn');
+            if (newRouteBtn) {
+                newRouteBtn.addEventListener('click', function() {
+                    newRouteForm.classList.toggle('hidden');
+                });
+            }
+            
+            // Cancel New Route
+            const cancelNewRouteBtn = document.getElementById('cancel-new-route');
+            if (cancelNewRouteBtn) {
+                cancelNewRouteBtn.addEventListener('click', function() {
+                    newRouteForm.classList.add('hidden');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
