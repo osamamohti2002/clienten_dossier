@@ -41,7 +41,7 @@
       type="submit"
       class="w-full bg-[#04fffb] text-black font-semibold py-2 rounded hover:bg-[#03dad8] transition"
     >
-      Inloggen
+      Inlogge
     </button>
     </form>
   </div>
