@@ -20,13 +20,19 @@
             <p class="text-gray-500 text-sm mt-1">Inloggen op uw account</p>
         </div>
 
-        <!-- Login Form -->
-        <form action="" method="POST" class="space-y-5">
+        @if ($errors->any())
+            <div class="bg-red-500 text-white p-2 rounded mb-4">
+                {{ $errors->first() }}
+            </div>
+        @endif
 
+        <!-- Login Form -->
+        <form action="{{ route('login.post') }}" method="POST" class="space-y-5">
+            @csrf
             <!-- Email -->
             <div>
                 <label class="font-medium text-gray-700">E-mailadres</label>
-                <input type="email"
+                <input type="email" name="email"
                     class="w-full px-4 py-2 border rounded-lg bg-gray-50 
                            focus:ring-2 focus:ring-blue-500 focus:outline-none"
                     placeholder="voorbeeld@zorgsysteem.nl"
@@ -36,7 +42,7 @@
             <!-- Password -->
             <div>
                 <label class="font-medium text-gray-700">Wachtwoord</label>
-                <input type="password"
+                <input type="password" name="password"
                     class="w-full px-4 py-2 border rounded-lg bg-gray-50 
                            focus:ring-2 focus:ring-blue-500 focus:outline-none"
                     placeholder="••••••••"
@@ -50,6 +56,8 @@
                        hover:bg-blue-700 transition shadow">
                 Inloggen
             </button>
+            {{ csrf_token() }}
+
         </form>
 
 
