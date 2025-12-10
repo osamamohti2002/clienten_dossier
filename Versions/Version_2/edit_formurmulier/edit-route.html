@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bewerk Route - ZorgSysteem</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="bg-gray-50 p-6">
+    <div class="max-w-4xl mx-auto">
+        <div class="mb-6">
+            <h1 class="text-2xl font-bold text-gray-900">Route bewerken</h1>
+            <p class="text-gray-600">Wijzig de routegegevens voor Sanne Visser</p>
+        </div>
+
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <form id="edit-form">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Zorgmedewerker -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">
+                            Zorgmedewerker *
+                        </label>
+                        <select class="w-full border border-gray-300 rounded-md p-2 text-sm">
+                            <option selected>Sanne Visser</option>
+                            <option>Thomas Jansen</option>
+                            <option>Emma de Bruin</option>
+                        </select>
+                    </div>
+
+                    <!-- Datum -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">
+                            Datum *
+                        </label>
+                        <input type="date" value="2023-11-15" 
+                               class="w-full border border-gray-300 rounded-md p-2 text-sm">
+                    </div>
+
+                    <!-- Shift -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">
+                            Shift *
+                        </label>
+                        <select class="w-full border border-gray-300 rounded-md p-2 text-sm">
+                            <option selected>Ochtend</option>
+                            <option>Avond</option>
+                            <option>Nacht</option>
+                        </select>
+                    </div>
+
+                    <!-- Starttijd -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">
+                            Starttijd *
+                        </label>
+                        <input type="time" value="08:30" 
+                               class="w-full border border-gray-300 rounded-md p-2 text-sm">
+                    </div>
+
+                    <!-- Eindtijd -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">
+                            Eindtijd *
+                        </label>
+                        <input type="time" value="13:00" 
+                               class="w-full border border-gray-300 rounded-md p-2 text-sm">
+                    </div>
+
+                    <!-- Status -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">
+                            Status *
+                        </label>
+                        <select class="w-full border border-gray-300 rounded-md p-2 text-sm">
+                            <option selected>Gepland</option>
+                            <option>Actief</option>
+                            <option>Voltooid</option>
+                        </select>
+                    </div>
+
+                    <!-- Cliënten -->
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">
+                            Cliënten *
+                        </label>
+                        <select multiple class="w-full border border-gray-300 rounded-md p-2 text-sm h-32">
+                            <option selected>Jan Jansen (Kerkstraat 123, Amsterdam)</option>
+                            <option selected>Maria de Vries (Dorpsweg 45, Utrecht)</option>
+                            <option>Peter Bakker (Beukenlaan 67, Rotterdam)</option>
+                            <option>Eva Smit (Molenstraat 89, Den Haag)</option>
+                        </select>
+                        <p class="text-xs text-gray-500 mt-1">
+                            Houd Ctrl ingedrukt om meerdere te selecteren
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="mt-8 flex justify-end space-x-3">
+                    <button type="button" 
+                            class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">
+                        Annuleren
+                    </button>
+                    <button type="submit" 
+                            class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                        Opslaan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('edit-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Route bijgewerkt!');
+            // In een echte app zou je hier een fetch/POST doen
+        });
+    </script>
+</body>
+</html>
