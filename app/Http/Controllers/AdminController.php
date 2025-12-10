@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use \App\Models\User;
 
 use Illuminate\Http\Request;
 
@@ -16,6 +17,7 @@ class AdminController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     * 
      */
     public function create()
     {
@@ -35,7 +37,25 @@ class AdminController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $users = User::all();
+        return view('admin.manage-users', compact('users'));
+    }
+
+    public function userCount(Request $request)
+    {
+        $search = $request->input('search');
+        
+        $users = User::with('role')
+            ->when($search, function($query, $search) {
+                return $query->where('name', 'like', '%' . $search . '%')
+                        ->orWhere('email', 'like', '%' . $search . '%');
+            })
+            ->limit(5)
+            ->get();
+        
+        $totalUsers = User::count();
+        
+        return view('admin.index', compact('totalUsers', 'users', 'search'));
     }
 
     /**
