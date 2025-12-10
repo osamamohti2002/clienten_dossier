@@ -1,10 +1,13 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\LogoutController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [LoginController::class, 'showLoginForm'])->name('index');
 Route::post('/', [LoginController::class, 'login'])->name('login.post');
+
+Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
 // Route::get('/admin/dashboard', function(){
 //     return view('admin.dashboard');
