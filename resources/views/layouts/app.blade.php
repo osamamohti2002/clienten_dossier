@@ -1,36 +1,35 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="nl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jukebox</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="//unpkg.com/alpinejs" defer></script>
-  <link rel="stylesheet" href="{{ asset('vendor/font-awesome/css/font-awesome.min.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - ZorgSysteem</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        /* Logo image styling */
+        .logo-img {
+            height: 2.5rem;
+            width: auto;
+            margin-right: 0.75rem;
+            object-fit: contain;
+        }
+        
+        /* Responsive logo adjustments */
+        @media (max-width: 640px) {
+            .logo-img {
+                height: 2rem; /* Slightly smaller on mobile */
+                margin-right: 0.5rem;
+            }
+        }
+    </style>
 </head>
-<body class="bg-[#ffffff] flex flex-col min-h-full">
-
-  <!-- Navbar -->
-  {{-- @guest
-      @include('layouts.nav-bars.mainNavBar')
-  @endguest
-
-
-  @auth
-    @include('layouts.nav-bars.userNavBar')
-  @endauth --}}
-
-
-  <main class="flex-grow">
-    {{-- @include('shared._flash') --}}
-    @yield('content')
-
-  </main>
-
-<!-- Footer -->
-<footer class="bg-[#111111] text-white text-center py-4">
-    <p class="text-sm">© Clienten Dossier 2025</p>
-</footer>
+<body class="bg-gray-50 text-gray-800">
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+      @yield('content')
+    </main>
 
 </body>
 </html>

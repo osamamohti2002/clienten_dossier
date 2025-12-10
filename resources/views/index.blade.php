@@ -56,8 +56,6 @@
                        hover:bg-blue-700 transition shadow">
                 Inloggen
             </button>
-            {{ csrf_token() }}
-
         </form>
 
 
