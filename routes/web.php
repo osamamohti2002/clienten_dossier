@@ -15,8 +15,8 @@ Route::middleware(['role:admin'])->group(function(){
         return view('admin.dashboard');
     })->name('admin.dashboard');
 });
-
-
+ 
+ 
 Route::middleware(['role:planner'])->group(function(){
     Route::get('/planner/dashboard', function(){
         return view('planner/dashboard');
