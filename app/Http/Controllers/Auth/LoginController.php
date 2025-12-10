@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -20,8 +22,6 @@ class LoginController extends Controller
             'password' => ['required', 'min:6'],
         ]);
 
-        //check op de gegevens
-
         if(!Auth::attempt($credentials)){
             return back()->withErrors([
                 'email' => 'Emailadres of wachtwoord zijn onjuist. ',
@@ -31,6 +31,7 @@ class LoginController extends Controller
         $request->session()->regenerate();
 
         $role = Auth::user()->role->name;
+
 
         switch($role){
             case 'admin';
