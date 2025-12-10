@@ -6,6 +6,7 @@
   <title>Jukebox</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="//unpkg.com/alpinejs" defer></script>
+  <link rel="stylesheet" href="{{ asset('vendor/font-awesome/css/font-awesome.min.css') }}">
 </head>
 <body class="bg-[#ffffff] flex flex-col min-h-full">
 
