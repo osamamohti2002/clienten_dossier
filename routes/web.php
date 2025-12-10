@@ -4,7 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
+
 use \App\Models\User;
 
 
@@ -20,6 +20,8 @@ Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 Route::middleware(['role:admin'])->group(function(){
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/create', [AdminController::class, 'create'])->name('admin.create');
+    Route::get('admin/', [AdminController::class, 'userCount'])->name('admin.userCount');
+
     });
  
  
