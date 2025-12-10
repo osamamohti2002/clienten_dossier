@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use Illuminate\Support\Facades\Route;
@@ -14,10 +15,9 @@ Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 // })->name('admin.dashboard');
 
 Route::middleware(['role:admin'])->group(function(){
-    Route::get('/admin/dashboard', function(){
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
-});
+    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/create', [AdminController::class, 'create'])->name('admin.create');
+    });
  
  
 Route::middleware(['role:planner'])->group(function(){

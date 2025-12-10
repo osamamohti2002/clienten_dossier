@@ -91,54 +91,7 @@
                                         </button>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <div class="h-10 w-10 flex-shrink-0 rounded-full bg-green-100 flex items-center justify-center">
-                                                <i class="fa fa-calendar text-green-600"></i>
-                                            </div>
-                                            <div class="ml-4">
-                                                <div class="text-sm font-medium text-gray-900">Mark de Jong</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Planner</span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">m.dejong@zorgsysteem.nl</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <button class="text-blue-600 hover:text-blue-900 mr-3">
-                                            <i class="fa fa-edit mr-1"></i>Bewerken
-                                        </button>
-                                        <button class="text-red-600 hover:text-red-900">
-                                            <i class="fa fa-trash-alt mr-1"></i>Verwijderen
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <div class="h-10 w-10 flex-shrink-0 rounded-full bg-yellow-100 flex items-center justify-center">
-                                                <i class="fa fa-user-md text-yellow-600"></i>
-                                            </div>
-                                            <div class="ml-4">
-                                                <div class="text-sm font-medium text-gray-900">Sanne Visser</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Zorgpersoneel</span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">s.visser@zorgsysteem.nl</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <button class="text-blue-600 hover:text-blue-900 mr-3">
-                                            <i class="fa fa-edit mr-1"></i>Bewerken
-                                        </button>
-                                        <button class="text-red-600 hover:text-red-900">
-                                            <i class="fa fa-trash-alt mr-1"></i>Verwijderen
-                                        </button>
-                                    </td>
-                                </tr>
+
                             </tbody>
                         </table>
                     </div>
