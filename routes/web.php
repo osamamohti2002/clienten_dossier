@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+
 
 Route::get('/', [LoginController::class, 'showLoginForm'])->name('index');
 Route::post('/', [LoginController::class, 'login'])->name('login.post');
@@ -14,8 +16,11 @@ Route::middleware(['role:admin'])->group(function(){
     Route::get('/admin/dashboard', function(){
         return view('admin.dashboard');
     })->name('admin.dashboard');
+
+    Route::get('/admin/test',[AdminController::class,'create'])->name('admin.create');
+    Route::post('/admin/test', [AdminController::class, 'store'])->name('admin.store');
 });
- 
+
  
 Route::middleware(['role:planner'])->group(function(){
     Route::get('/planner/dashboard', function(){
