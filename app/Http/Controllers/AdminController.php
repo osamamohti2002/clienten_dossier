@@ -10,10 +10,22 @@ class AdminController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
 
-        return view('admin.dashboard');
+        $search = $request->input('search');
+
+        $users = User::with('role')
+            ->when($search, function ($query, $search) {
+                $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+            })
+            ->limit(5)
+            ->get();
+
+        $totalUsers = User::count();
+
+        return view('admin.dashboard', compact('users', 'totalUsers', 'search')); 
     }
 
     /**
@@ -42,22 +54,6 @@ class AdminController extends Controller
         return view('admin.manage-users', compact('users'));
     }
 
-    public function userCount(Request $request)
-    {
-        $search = $request->input('search');
-        
-        $users = User::with('role')
-            ->when($search, function($query, $search) {
-                return $query->where('name', 'like', '%' . $search . '%')
-                        ->orWhere('email', 'like', '%' . $search . '%');
-            })
-            ->limit(5)
-            ->get();
-        
-        $totalUsers = User::count();
-        
-        return view('admin.index', compact('totalUsers', 'users', 'search'));
-    }
 
     /**
      * Show the form for editing the specified resource.
