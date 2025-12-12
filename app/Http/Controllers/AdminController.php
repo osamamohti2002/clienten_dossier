@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+use \App\Models\User;
 
 
-use App\Models\User;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -13,13 +13,27 @@ class AdminController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('admin.dashboard');
+
+        $search = $request->input('search');
+
+        $users = User::with('role')
+            ->when($search, function ($query, $search) {
+                $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+            })
+            ->limit(5)
+            ->get();
+
+        $totalUsers = User::count();
+
+        return view('admin.dashboard', compact('users', 'totalUsers', 'search')); 
     }
 
     /**
      * Show the form for creating a new resource.
+     * 
      */
         public function create()
     {
@@ -57,6 +71,7 @@ class AdminController extends Controller
         return redirect()->route('admin.create') // Changed from 'admin.test' to 'admin.create'
             ->with('success', 'Gebruiker succesvol aangemaakt!');
     }
+
 
     /**
      * Show the form for editing the specified resource.
