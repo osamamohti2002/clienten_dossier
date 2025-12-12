@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 use \App\Models\User;
 
+
+use App\Models\User;
+use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -32,9 +36,10 @@ class AdminController extends Controller
      * Show the form for creating a new resource.
      * 
      */
-    public function create()
+        public function create()
     {
-        //
+        $roles = Role::all(); // Get all roles to pass to the view
+        return view('admin.test', compact('roles'));
     }
 
     /**
@@ -42,16 +47,30 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        // Validate the request
+        $validated = $request->validate([
+            'naam' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+            'role_id' => 'required|exists:roles,id',
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        $users = User::all();
-        return view('admin.manage-users', compact('users'));
+
+
+        // Debug: Check what data is being received
+        // dd($validated); // Uncomment this temporarily to see the data
+
+        // Create the user
+        $user = User::create([
+            'name' => $validated['naam'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+            'role_id' => $validated['role_id'], // Fixed: Changed from 'role' to 'role_id'
+        ]);
+
+        // Redirect back with success message
+        return redirect()->route('admin.create') // Changed from 'admin.test' to 'admin.create'
+            ->with('success', 'Gebruiker succesvol aangemaakt!');
     }
 
 
