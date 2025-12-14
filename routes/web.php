@@ -24,6 +24,9 @@ Route::middleware(['role:admin'])->group(function(){
 
     Route::delete('/admin/users/{id}', [AdminController::class, 'destroy'])
     ->name('admin.users.destroy');
+
+    Route::get('/admin/users/{id}/edit', [AdminController::class, 'edit'])
+    ->name('admin.users.edit');
     });
 
  
