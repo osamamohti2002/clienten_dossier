@@ -77,7 +77,8 @@ class AdminController extends Controller
     public function edit(string $id)
     {
         $user = User::with('role')->findOrFail($id);
-        return view('admin.users.edit', compact('user'));
+        $roles = \App\Models\Role::all();
+        return view('admin.users.edit', compact('user', 'roles'));
     }
 
     /**
@@ -85,7 +86,7 @@ class AdminController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        dd('update geraakt', $id, $request->all());
     }
 
     /**
