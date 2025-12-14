@@ -76,7 +76,8 @@ class AdminController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::with('role')->findOrFail($id);
+        return view('admin.users.edit', compact('user'));
     }
 
     /**
