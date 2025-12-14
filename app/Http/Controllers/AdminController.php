@@ -92,6 +92,10 @@ class AdminController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return redirect()->route('admin.dashboard')
+        ->with('success', 'Medewerker verwijderen.');
     }
 }
