@@ -37,8 +37,8 @@ class AdminController extends Controller
      */
         public function create()
     {
-        $roles = Role::all(); // Get all roles to pass to the view
-        return view('admin.test', compact('roles'));
+        $roles = Role::all(); 
+        return view('admin.create', compact('roles'));
     }
 
     /**
@@ -46,7 +46,7 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate the request
+        
         $validated = $request->validate([
             'naam' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -57,14 +57,14 @@ class AdminController extends Controller
 
 
         // Debug: Check what data is being received
-        // dd($validated); // Uncomment this temporarily to see the data
+        // dd($validated); // to see the data
 
         // Create the user
         $user = User::create([
             'name' => $validated['naam'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
-            'role_id' => $validated['role_id'], // Fixed: Changed from 'role' to 'role_id'
+            'role_id' => $validated['role_id'], 
         ]);
 
         // Redirect back with success message

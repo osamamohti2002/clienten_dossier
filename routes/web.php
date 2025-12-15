@@ -17,8 +17,8 @@ Route::middleware(['role:admin'])->group(function(){
         return view('admin.dashboard');
     })->name('admin.dashboard');
 
-    Route::get('/admin/test',[AdminController::class,'create'])->name('admin.create');
-    Route::post('/admin/test', [AdminController::class, 'store'])->name('admin.store');
+    Route::get('/admin/create',[AdminController::class,'create'])->name('admin.create');
+    Route::post('/admin/create', [AdminController::class, 'store'])->name('admin.store');
 });
 
  
