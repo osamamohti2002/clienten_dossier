@@ -77,6 +77,7 @@
                         <p class="text-xs text-gray-500 mt-1">Vul alleen in om wachtwoord te wijzigen</p>
                     </div>
                 </div>
+                
 
                 <!-- Form Actions -->
                 <div class="mt-8 flex justify-end space-x-3">
