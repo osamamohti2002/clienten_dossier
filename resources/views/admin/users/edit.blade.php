@@ -65,7 +65,7 @@
                         <label class="block text-sm font-medium text-gray-700 mb-1">
                             Wachtwoord
                         </label>
-                        <input type="password" placeholder="Laat leeg om niet te wijzigen" 
+                        <input type="password" name="password" placeholder="Laat leeg om niet te wijzigen" 
                                class="w-full border border-gray-300 rounded-md p-2 text-sm">
                         <p class="text-xs text-gray-500 mt-1">Vul alleen in om wachtwoord te wijzigen</p>
                     </div>
