@@ -4,8 +4,6 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use Illuminate\Support\Facades\Route;
-
-
 use \App\Models\User;
 use Symfony\Component\Routing\Annotation\Route as AnnotationRoute;
 use Symfony\Component\Routing\Route as RoutingRoute;
@@ -21,6 +19,9 @@ Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
 Route::middleware(['role:admin'])->group(function(){
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+
+    Route::get('/admin/create',[AdminController::class,'create'])->name('admin.create');
+    Route::post('/admin/create',[AdminController::class,'store'])->name('admin.store');
 
     Route::delete('/admin/users/{id}', [AdminController::class, 'destroy'])
     ->name('admin.users.destroy');

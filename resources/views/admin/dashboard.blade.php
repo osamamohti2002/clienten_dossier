@@ -40,7 +40,7 @@
                     <p class="mt-1 max-w-2xl text-sm text-gray-500">Beheer alle medewerkers</p>
                 </div>
 
-                <a href="#"
+                <a href="{{ route('admin.create') }}"
                    class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700">
                     <i class="fa fa-users mr-2"></i>Nieuwe medewerker toevoegen
                 </a>
