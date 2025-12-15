@@ -109,9 +109,13 @@
                             </td>
 
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                <button type="button" class="text-blue-600 hover:text-blue-900 mr-3">
+                                <a href="{{route('admin.users.edit', $user->id) }}"
+                                    class="text-blue-600 hover:text-blue-900 mr-3 inline-flex items-center">
                                     <i class="fa fa-edit mr-1"></i>Bewerken
-                                </button>
+                                </a>
+                                {{-- <button type="button" class="text-blue-600 hover:text-blue-900 mr-3">
+                                    <i class="fa fa-edit mr-1"></i>Bewerken
+                                </button> --}}
 
                                 <!-- Delete knop (opent modal) -->
                                 <button type="button"

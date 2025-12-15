@@ -76,7 +76,9 @@ class AdminController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::with('role')->findOrFail($id);
+        $roles = Role::all();
+        return view('admin.users.edit', compact('user', 'roles'));
     }
 
     /**
@@ -84,7 +86,23 @@ class AdminController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'role_id' => 'required|exists:roles,id',
+            'phone' => 'nullable|string|max:20',
+            'password' => 'nullable|string|max:20',
+        ]);
+
+        if (empty($data['password'])) {
+            unset($data['password']);
+        }
+
+        $user->update($data);
+
+        return redirect()->route('admin.dashboard')
+            ->with('success', 'Mederwerker bijgewerkt.');
     }
 
     /**
