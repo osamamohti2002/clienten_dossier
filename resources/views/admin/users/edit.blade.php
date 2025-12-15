@@ -56,7 +56,7 @@
                         <label class="block text-sm font-medium text-gray-700 mb-1">
                             Telefoonnummer
                         </label>
-                        <input type="tel" value="06-12345678" 
+                        <input type="tel" name="phone" value="{{old('phone', $user->phone)}}" 
                                class="w-full border border-gray-300 rounded-md p-2 text-sm">
                     </div>
 

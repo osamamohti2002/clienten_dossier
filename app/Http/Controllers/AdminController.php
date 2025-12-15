@@ -91,6 +91,7 @@ class AdminController extends Controller
             'name' => 'required| string|max:255',
             'email' => 'required| email|max:255|unique:users,email,' . $user->id,
             'role_id' => 'required|exists:roles,id',
+            'phone' => 'nullable| string|max:20',
         ]);
 
         $user->update($data);
