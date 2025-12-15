@@ -4,7 +4,7 @@
                 <!-- Left: Logo -->
                 <div class="flex items-center">
                     <div class="flex-shrink-0 flex items-center">
-                        <img class="logo-img" src="ZorgSysteem_logo.png" alt="ZorgSysteem logo">
+                        <img class="logo-img" src="../media/logo/ZorgSysteem_logo.png" alt="ZorgSysteem logo">
                         <span class="text-xl font-bold text-gray-900">ZorgSysteem</span>
                     </div>
                 </div>

@@ -15,7 +15,7 @@
 
         <!-- Logo -->
         <div class="flex flex-col items-center mb-6">
-            <img src="ZorgSysteem_logo.png" alt="ZorgSysteem Logo" class="h-20 mb-3 drop-shadow-md">
+            <img src="media/logo/ZorgSysteem_logo.png" alt="ZorgSysteem Logo" class="h-20 mb-3 drop-shadow-md">
             <h2 class="text-3xl font-bold text-gray-900">ZorgSysteem</h2>
             <p class="text-gray-500 text-sm mt-1">Inloggen op uw account</p>
         </div>
