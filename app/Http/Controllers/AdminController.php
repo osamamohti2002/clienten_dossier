@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Zorgpersoneel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -45,26 +47,32 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'naam' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
+            'phone' => 'required|string|min:5|max:20',
             'password' => 'required|string|min:6|confirmed',
             'role_id' => 'required|exists:roles,id',
         ]);
 
 
+        DB::transaction(function () use ($validated){
+            $user = User::create([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'phone' => $validated['phone'],
+                'password' => Hash::make($validated['password']),
+                'role_id' => $validated['role_id'],
+            ]);
 
+            if($user->role_id == 3){
+                Zorgpersoneel::create([
+                    'user_id' => $user->id,
+                ]);
+            }
         
-        // Create the user
-        $user = User::create([
-            'name' => $validated['naam'],
-            'email' => $validated['email'],
-            'phone' => $request->phone,
-            'password' => Hash::make($validated['password']),
-            'role_id' => $validated['role_id'], 
-        ]);
-
+        });        
         // Redirect back with success message
-        return redirect()->route('admin.create') // Changed from 'admin.test' to 'admin.create'
+        return redirect()->route('admin.create') 
             ->with('success', 'Gebruiker succesvol aangemaakt!');
     }
 

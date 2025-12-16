@@ -53,6 +53,6 @@ class User extends Authenticatable
     }
 
     public function zorgpersoneel(){
-        return $this->belongsTo(Zorgpersoneel::class);
+        return $this->hasOne(Zorgpersoneel::class);
     }
 }

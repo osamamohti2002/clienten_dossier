@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@extends('layouts.navbars.adminNav')
 @section('content')
 <div class="bg-gray-50 p-6 min-h-screen">
     <div class="max-w-4xl mx-auto">
@@ -17,7 +17,7 @@
                         <label class="block text-sm font-medium text-gray-700 mb-1">
                             Naam *
                         </label>
-                        <input type="text" name="naam" value="{{ old('naam') }}" required
+                        <input type="text" name="name" value="{{ old('naam') }}" required
                                class="w-full border border-gray-300 rounded-md p-2 text-sm">
                     </div>
 
@@ -28,6 +28,23 @@
                         </label>
                         <input type="email" name="email" value="{{ old('email') }}" required
                                class="w-full border border-gray-300 rounded-md p-2 text-sm">
+                    </div>
+
+                      <!-- Telefoonnummer -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">
+                            Telefoonnummer *
+                        </label>
+                        <input type="text"
+                            name="phone"
+                            value="{{ old('phone') }}"
+                            required
+                            pattern="[0-9]{10}"
+                            maxlength="10"
+                            minlength="5"
+                            inputmode="numeric"
+                            class="w-full border border-gray-300 rounded-md p-2 text-sm">
+                        <p class="text-xs text-gray-500 mt-1">Exact 10 cijfers</p>
                     </div>
 
                     <!-- Wachtwoord -->
@@ -41,9 +58,6 @@
                     </div>
 
                     <!-- Wachtwoord bevestigen -->
-
-
-
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">
                             Wachtwoord bevestigen *
@@ -51,24 +65,6 @@
                         <input type="password" name="password_confirmation" required
                                class="w-full border border-gray-300 rounded-md p-2 text-sm">
                     </div>
-
-                    
-                      <!-- Telefoonnummer -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">
-                        Telefoonnummer *
-                    </label>
-                    <input type="text"
-                        name="phone"
-                        value="{{ old('phone') }}"
-                        required
-                        pattern="[0-9]{10}"
-                        maxlength="10"
-                        minlength="5"
-                        inputmode="numeric"
-                        class="w-full border border-gray-300 rounded-md p-2 text-sm">
-                    <p class="text-xs text-gray-500 mt-1">Exact 10 cijfers</p>
-                </div>
 
                     <!-- Rol -->
                     <div>

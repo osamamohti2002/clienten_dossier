@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Zorgpersoneel extends Model
 {
+    protected $table = 'zorg_personeel';
     protected $fillable = [
         'user_id',
     ];
 
     public function users(){
-        return $this->hasMany(User::class);
+        return $this->belongsTo(User::class);
     }
 }
