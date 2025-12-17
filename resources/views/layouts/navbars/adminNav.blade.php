@@ -18,7 +18,7 @@
                             <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
                                 <i class="fa fa-user text-blue-600"></i>
                             </div>
-                            <span class="ml-2 hidden md:block">Lisa van Dijk</span>
+                            <span class="ml-2 hidden md:block">{{ auth()->user()->name }}</span>
                             <i class="fa fa-chevron-down ml-2 text-gray-400 hidden md:block"></i>
                         </button>
                     </div>                  
