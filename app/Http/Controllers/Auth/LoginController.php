@@ -34,13 +34,13 @@ class LoginController extends Controller
 
 
         switch($role){
-            case 'admin';
+            case 'admin':
                 return redirect()->route('admin.dashboard');
 
-            case 'planner';
+            case 'planner':
                 return redirect()->route('planner.dashboard');
 
-            case 'zorgpersoneel';
+            case 'zorgpersoneel':
                 return redirect()->route('zorg.dashboard');
         }
 
