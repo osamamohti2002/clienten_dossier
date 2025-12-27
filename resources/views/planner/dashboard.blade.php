@@ -25,7 +25,7 @@
                     </a>
 
                     {{-- Later koppelen aan planner.clients.index --}}
-                    <a href="#"
+                    <a href="{{ route('planner.clients.index') }}"
                        class="px-4 py-2 rounded-md border border-blue-600 text-blue-600 text-sm font-medium hover:bg-blue-50">
                         Cliënten
                     </a>

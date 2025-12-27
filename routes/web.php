@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\LogoutController;
 use Illuminate\Support\Facades\Route;
 use \App\Models\User;
 use Symfony\Component\Routing\Annotation\Route as AnnotationRoute;
+use Symfony\Component\Routing\Attribute\Route as AttributeRoute;
 use Symfony\Component\Routing\Route as RoutingRoute;
 
 Route::get('/', [LoginController::class, 'showLoginForm'])->name('index');
@@ -35,12 +36,15 @@ Route::middleware(['role:admin'])->group(function(){
 
  
  
-Route::middleware(['role:planner'])->group(function(){
-    Route::get('/planner/dashboard', function(){
-        return view('planner/dashboard');
-    })->name('planner.dashboard');
-});
-
+    Route::middleware(['role:planner'])->group(function(){
+        Route::get('/planner/dashboard', function(){
+            return view('planner/dashboard');
+        })->name('planner.dashboard');
+    
+        Route::get('/planner/clients', function () {
+            return view('planner.clients.index');
+        })->name('planner.clients.index');
+    });
 
 Route::middleware(['role:zorgpersoneel'])->group(function(){
     Route::get('/zorg/dashboard', function(){
