@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\Planner\ClientController;
 use Illuminate\Support\Facades\Route;
 use \App\Models\User;
 use Symfony\Component\Routing\Annotation\Route as AnnotationRoute;
@@ -41,9 +42,13 @@ Route::middleware(['role:admin'])->group(function(){
             return view('planner/dashboard');
         })->name('planner.dashboard');
     
-        Route::get('/planner/clients', function () {
-            return view('planner.clients.index');
-        })->name('planner.clients.index');
+    // Clients
+    Route::get('/planner/clients', [ClientController::class, 'index'])
+        ->name('planner.clients.index');
+
+    Route::get('/planner/clients/create', [ClientController::class, 'create'])
+        ->name('planner.clients.create');
+
     });
 
 Route::middleware(['role:zorgpersoneel'])->group(function(){
