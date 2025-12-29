@@ -72,7 +72,7 @@ class AdminController extends Controller
         
         });        
         // Redirect back with success message
-        return redirect()->route('admin.create') 
+        return redirect()->route('admin.dashboard') 
             ->with('success', 'Gebruiker succesvol aangemaakt!');
     }
 

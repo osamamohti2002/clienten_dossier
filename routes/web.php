@@ -42,13 +42,15 @@ Route::middleware(['role:admin'])->group(function(){
             return view('planner/dashboard');
         })->name('planner.dashboard');
     
-    // Clients
-    Route::get('/planner/clients', [ClientController::class, 'index'])
-        ->name('planner.clients.index');
+        // Clients
+        Route::get('/planner/clients', [ClientController::class, 'index'])
+            ->name('planner.clients.index');
 
-    Route::get('/planner/clients/create', [ClientController::class, 'create'])
-        ->name('planner.clients.create');
+        Route::get('/planner/clients/create', [ClientController::class, 'create'])
+            ->name('planner.clients.create');
 
+        Route::post('/planner/clients', [ClientController::class, 'store'])
+            ->name('planner.clients.store');
     });
 
 Route::middleware(['role:zorgpersoneel'])->group(function(){

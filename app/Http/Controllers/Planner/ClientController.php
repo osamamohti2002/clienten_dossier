@@ -4,8 +4,35 @@ namespace App\Http\Controllers\Planner;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Client;
+
 
 class ClientController extends Controller
 {
-    //
+    public function index()
+    {
+        $clients = Client::orderBy('name')->get();
+
+        return view('planner.clients.index', compact('clients'));
+    }
+    public function create()
+    {
+        return view('planner.clients.create');
+    }
+
+    public function store(Request $request)
+{
+    $data = $request->validate([
+        'name' => 'required|string|max:255',
+        'bsn' => 'required|string|max:255|unique:clients,bsn',
+        'phone' => 'nullable|string|max:50',
+        'address' => 'nullable|string|max:255',
+        'visit_time' => 'nullable|date_format:H:i',
+    ]);
+
+    Client::create($data);
+
+    return redirect()->route('planner.clients.index')
+        ->with('success', 'Cliënt toegevoegd.');
+}
 }
