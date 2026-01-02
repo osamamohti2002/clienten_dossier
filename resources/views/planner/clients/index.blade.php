@@ -105,12 +105,15 @@
                                            class="text-blue-600 hover:text-blue-900 mr-3">
                                             <i class="fa fa-edit mr-1"></i>Bewerken
                                         </a>
-                        
-                                        <button type="button"
-                                                class="text-red-600 hover:text-red-900"
-                                                onclick="alert('Delete komt straks');">
-                                            <i class="fa fa-trash mr-1"></i>Verwijderen
-                                        </button>
+                                        <form action="{{ route('planner.clients.destroy', $client->id) }}" method="post" class="inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                    class="text-red-600 hover:text-red-900">
+                                                <i class="fa fa-trash mr-1"></i>Verwijderen
+                                            </button>
+                                        </form>
+
                                     </td>
                                 </tr>
                             @empty
