@@ -35,4 +35,13 @@ class ClientController extends Controller
     return redirect()->route('planner.clients.index')
         ->with('success', 'Cliënt toegevoegd.');
 }
+
+    public function destroy($id)
+    {
+        $client = Client::findOrFail($id);
+        $client->delete();
+
+        return redirect()->route('planner.clients.index')
+            ->with('success', 'Cliënt verwijderd.');
+    }
 }
