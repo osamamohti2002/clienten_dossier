@@ -27,6 +27,13 @@
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
+    @if (auth()->user()->role_id === 2)
+        @include('layouts.navbars.plannerNav')
+    @elseif (auth()->user()->role_id === 3)
+        @include('layouts.navbars.zorgNav')
+    @elseif (auth()->user()->role_id === 1)
+        @include('layouts.navbars.adminNav')
+    @endif
     <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
       @yield('content')
     </main>

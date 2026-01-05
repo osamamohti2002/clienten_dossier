@@ -1,5 +1,4 @@
 @extends('layouts.app')
-@extends('layouts.navbars.adminNav')
 
 @section('content')
 <div class="fade-in">

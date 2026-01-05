@@ -2,10 +2,23 @@
 
 @section('content')
 <div class="max-w-4xl mx-auto p-6">
-    <div class="mb-6">
-        <h1 class="text-2xl font-bold text-gray-900">Nieuwe cliënt</h1>
-        <p class="text-gray-600 mt-1">Vul de gegevens in om een cliënt toe te voegen</p>
+    <div class="mb-6 flex items-start gap-4">
+        <!-- Terug pijl -->
+        <a href="{{ route('planner.clients.index') }}"
+        class="mt-1 text-gray-600 hover:text-gray-900"
+        title="Terug naar overzicht">
+            <i class="fa fa-arrow-left text-xl"></i>
+        </a>
+
+        <!-- Titel -->
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900">Nieuwe cliënt</h1>
+            <p class="text-gray-600 mt-1">
+                Vul de gegevens in om een cliënt toe te voegen
+            </p>
+        </div>
     </div>
+
 
     <div class="bg-white shadow rounded-lg p-6">
         <form action="{{ route('planner.clients.store') }}" method="POST" class="space-y-6">
