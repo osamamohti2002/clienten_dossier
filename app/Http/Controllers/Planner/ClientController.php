@@ -27,7 +27,6 @@ class ClientController extends Controller
         'bsn' => 'required|string|max:255|unique:clients,bsn',
         'phone' => 'nullable|string|max:50',
         'address' => 'nullable|string|max:255',
-        'visit_time' => 'nullable|date_format:H:i',
     ]);
 
     Client::create($data);
