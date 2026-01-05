@@ -13,15 +13,17 @@
 
                 <!-- Middle: nav buttons -->
                 <div class="hidden md:flex items-center space-x-3">
-                    <a href="#"
-                       class="px-4 py-2 rounded-md border border-blue-600 text-blue-600 text-sm font-medium hover:bg-blue-50">
-                        Routes
-                    </a>
+                    <a href="{{ route('planner.dashboard') }}"
+                        class="px-4 py-2 rounded-md text-sm font-medium
+                        {{ request()->routeIs('planner.dashboard') ? 'bg-blue-600 text-white' : 'border border-blue-600 text-blue-600 hover:bg-blue-50' }}">
+                            Routes
+                        </a>
 
-                    <a href="{{ route('planner.clients.index') }}"
-                       class="px-4 py-2 rounded-md bg-blue-600 text-white text-sm font-medium hover:bg-blue-700">
-                        Cliënten
-                    </a>
+                        <a href="{{ route('planner.clients.index') }}"
+                        class="px-4 py-2 rounded-md text-sm font-medium
+                        {{ request()->routeIs('planner.clients.*') ? 'bg-blue-600 text-white' : 'border border-blue-600 text-blue-600 hover:bg-blue-50' }}">
+                            Cliënten
+                        </a>
                 </div>
 
                 <!-- Right: Profile & Logout -->
