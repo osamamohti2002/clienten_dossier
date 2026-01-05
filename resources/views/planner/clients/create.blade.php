@@ -56,13 +56,6 @@
                        placeholder="Bijv. Kerkstraat 1, Amsterdam">
             </div>
 
-            <!-- Bezoektijd -->
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Bezoektijd</label>
-                <input type="time" name="visit_time" value="{{ old('visit_time') }}"
-                       class="w-full border border-gray-300 rounded-md p-2 text-sm">
-            </div>
-
             <!-- Actions -->
             <div class="flex justify-end gap-3">
                 <a href="{{ route('planner.clients.index') }}"
