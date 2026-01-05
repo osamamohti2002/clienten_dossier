@@ -1,63 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="bg-gray-50 text-gray-800">
-    <!-- Top Navigation Bar -->
-    <nav class="bg-white shadow-md">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <!-- Left: Logo -->
-                <div class="flex items-center">
-                    <div class="flex-shrink-0 flex items-center">
-                        {{-- Gebruik later een echte asset() --}}
-                        <img class="h-10 w-auto mr-3 object-contain"
-                            src="{{ asset('media/logo/ZorgSysteem_logo.png') }}"
-                            alt="ZorgSysteem logo">
-                        <span class="text-xl font-bold text-gray-900">ZorgSysteem</span>
-                    </div>
-                </div>
-
-                <!-- Middle: nav buttons -->
-                <div class="hidden md:flex items-center space-x-3">
-                    <a href="{{ route('planner.dashboard') }}"
-                       class="px-4 py-2 rounded-md bg-blue-600 text-white text-sm font-medium hover:bg-blue-700">
-                        Routes
-                    </a>
-
-                    {{-- Later koppelen aan planner.clients.index --}}
-                    <a href="{{ route('planner.clients.index') }}"
-                       class="px-4 py-2 rounded-md border border-blue-600 text-blue-600 text-sm font-medium hover:bg-blue-50">
-                        Cliënten
-                    </a>
-                </div>
-
-                <!-- Right: Profile & Actions -->
-                <div class="flex items-center space-x-4">
-                    <div class="relative">
-                        <div class="flex items-center text-sm rounded-full">
-                            <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
-                                <i class="fa fa-user text-blue-600"></i>
-                            </div>
-                            <span class="ml-2 hidden md:block">
-                                {{ auth()->user()->name ?? 'Planner' }}
-                            </span>
-                        </div>
-                    </div>
-
-                    <!-- Logout Button -->
-                    <form action="{{ route('logout') }}" method="POST">
-                        @csrf
-                        <button type="submit"
-                                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700">
-                            <i class="fa fa-sign-out mr-2"></i>Uitloggen
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div class="px-4 py-6 sm:px-0">
             <!-- Dashboard Title -->
             <div class="mb-8 flex items-center justify-between">
@@ -180,8 +123,8 @@
             </div>
 
         </div>
-    </main>
-</div>
+
+
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {

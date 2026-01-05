@@ -1,5 +1,4 @@
 @extends('layouts.app')
-@extends('layouts.navbars.adminNav')
 @section('content')
 <div class="bg-gray-50 p-6 min-h-screen">
     <div class="max-w-4xl mx-auto">

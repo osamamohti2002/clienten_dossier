@@ -51,6 +51,9 @@ Route::middleware(['role:admin'])->group(function(){
 
         Route::post('/planner/clients', [ClientController::class, 'store'])
             ->name('planner.clients.store');
+
+        Route::delete('/planner/clients/{id}', [ClientController::class, 'destroy'])
+            ->name('planner.clients.destroy');
     });
 
 Route::middleware(['role:zorgpersoneel'])->group(function(){
