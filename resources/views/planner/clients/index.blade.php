@@ -53,6 +53,12 @@
     </nav>
 
     <!-- Page content -->
+     @if(session('success'))
+        <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+            <span class="block sm:inline">{{ session('success') }}</span>
+        </div>
+    @endif
+
     <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div class="px-4 py-6 sm:px-0">
             <!-- Title + add button -->
@@ -101,7 +107,7 @@
                                     <td class="px-6 py-4 text-sm text-gray-700">{{ $client->address ?? '—' }}</td>
                                     <td class="px-6 py-4 text-sm text-gray-700">{{ $client->phone ?? '—' }}</td>
                                     <td class="px-6 py-4 text-sm font-medium">
-                                        <a href="#"
+                                        <a href="{{ route('planner.clients.edit', $client) }}"
                                            class="text-blue-600 hover:text-blue-900 mr-3">
                                             <i class="fa fa-edit mr-1"></i>Bewerken
                                         </a>
@@ -128,4 +134,15 @@
         </div>
     </main>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+        const messages = document.querySelectorAll('[role="alert"]');
+        messages.forEach(function(msg) {
+            msg.style.display = 'none';
+        });
+    }, 3000); // 3000ms = 3 seconden
+});
+</script>
 @endsection

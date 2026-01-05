@@ -51,6 +51,12 @@ Route::middleware(['role:admin'])->group(function(){
 
         Route::post('/planner/clients', [ClientController::class, 'store'])
             ->name('planner.clients.store');
+
+        Route::get('/planner/clients/{client}/edit', [ClientController::class, 'edit'])
+        ->name('planner.clients.edit');
+
+        Route::put('/planner/clients/{client}', [ClientController::class, 'update'])
+            ->name('planner.clients.update');
     });
 
 Route::middleware(['role:zorgpersoneel'])->group(function(){
