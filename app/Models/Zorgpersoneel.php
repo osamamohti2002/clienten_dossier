@@ -14,4 +14,9 @@ class Zorgpersoneel extends Model
     public function users(){
         return $this->belongsTo(User::class);
     }
+    // voor routes 
+    public function routes()
+    {
+        return $this->hasMany(Route::class);
+    }
 }
