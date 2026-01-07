@@ -54,6 +54,11 @@ Route::middleware(['role:admin'])->group(function(){
 
         Route::delete('/planner/clients/{id}', [ClientController::class, 'destroy'])
             ->name('planner.clients.destroy');
+        Route::get('/planner/clients/{client}/edit', [ClientController::class, 'edit'])
+        ->name('planner.clients.edit');
+
+        Route::put('/planner/clients/{client}', [ClientController::class, 'update'])
+            ->name('planner.clients.update');
     });
 
 Route::middleware(['role:zorgpersoneel'])->group(function(){
