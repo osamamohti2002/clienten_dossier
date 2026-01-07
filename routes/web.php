@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Planner\ClientController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use \App\Models\User;
 use Symfony\Component\Routing\Annotation\Route as AnnotationRoute;
@@ -65,4 +66,10 @@ Route::middleware(['role:zorgpersoneel'])->group(function(){
     Route::get('/zorg/dashboard', function(){
         return view('zorg/dashboard');
     })->name('zorg.dashboard');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.view');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 });
