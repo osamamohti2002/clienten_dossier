@@ -11,12 +11,13 @@ class Zorgpersoneel extends Model
         'user_id',
     ];
 
-    public function users(){
-        return $this->belongsTo(User::class);
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
-    // voor routes 
+
     public function routes()
     {
-        return $this->hasMany(Route::class);
+        return $this->hasMany(Route::class, 'zorg_personeel_id');
     }
 }
