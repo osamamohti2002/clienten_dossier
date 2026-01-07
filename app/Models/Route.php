@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
-
+use App\Models\Zorgpersoneel;
+use App\Models\Client;
 
 class Route extends Model
 {
@@ -16,13 +16,15 @@ class Route extends Model
         'eindtijd',
     ];
 
+    // Route belongs to ONE zorgpersoneel
+    public function zorgpersoneel()
+    {
+        return $this->belongsTo(Zorgpersoneel::class, 'zorgpersoneel_id');
+    }
+
+    // Route has MANY clients
     public function clients()
     {
         return $this->belongsToMany(Client::class, 'client_route');
-    }
-
-    public function zorgpersoneel()
-    {
-        return $this->belongsTo(User::class, 'zorgpersoneel_id');
     }
 }
