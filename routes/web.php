@@ -9,6 +9,7 @@ use \App\Models\User;
 use Symfony\Component\Routing\Annotation\Route as AnnotationRoute;
 use Symfony\Component\Routing\Attribute\Route as AttributeRoute;
 use Symfony\Component\Routing\Route as RoutingRoute;
+use App\Http\Controllers\Planner\RouteController;
 
 Route::get('/', [LoginController::class, 'showLoginForm'])->name('index');
 Route::post('/', [LoginController::class, 'login'])->name('login.post');
@@ -60,4 +61,14 @@ Route::middleware(['role:zorgpersoneel'])->group(function(){
     Route::get('/zorg/dashboard', function(){
         return view('zorg/dashboard');
     })->name('zorg.dashboard');
+});
+
+// voor routes aanmaken
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/planner/routes/create', [RouteController::class, 'create'])
+        ->name('planner.routes.create');
+
+    Route::post('/planner/routes', [RouteController::class, 'store'])
+        ->name('planner.routes.store');
 });
