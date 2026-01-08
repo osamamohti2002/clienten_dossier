@@ -85,7 +85,7 @@
                             <td class="px-6 py-4 text-sm text-gray-700">{{ $client->address ?? '—' }}</td>
                             <td class="px-6 py-4 text-sm text-gray-700">{{ $client->phone ?? '—' }}</td>
                             <td class="px-6 py-4 text-sm font-medium">
-                                <a href="#"
+                                <a href="{{ route('planner.clients.edit', $client->id) }}"
                                     class="text-blue-600 hover:text-blue-900 mr-3">
                                     <i class="fa fa-edit mr-1"></i>Bewerken
                                 </a>
