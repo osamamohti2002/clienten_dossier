@@ -4,19 +4,31 @@
 
 
 <div class="px-4 py-6 sm:px-0">
+@if (session('success'))
+    <div class="mb-6 rounded-md bg-green-50 p-4 border border-green-200 text-green-800">
+        <div class="flex items-center">
+            <i class="fa fa-check-circle mr-2"></i>
+            <span>{{ session('success') }}</span>
+        </div>
+    </div>
+@endif
+
     <!-- Title + add button -->
-    <div class="flex items-center justify-between mb-6">
+    <div class="flex items-center gap-4">
+        <!-- Terug pijl -->
+        <a href="{{ route('planner.dashboard') }}"
+        class="text-gray-600 hover:text-gray-900"
+        title="Terug">
+            <i class="fa fa-arrow-left text-2xl"></i>
+        </a>
+
+        <!-- Titel -->
         <div>
             <h1 class="text-3xl font-bold text-gray-900">Cliënten</h1>
             <p class="text-gray-600 mt-1">Beheer cliënten</p>
         </div>
-
-        <!-- Nog geen create route: tijdelijk # -->
-        <a href="{{ route('planner.clients.create') }}"
-            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700">
-            <i class="fa fa-plus mr-2"></i>Nieuwe cliënt
-        </a>
     </div>
+
 
     <!-- Search -->
     <div class="bg-white shadow rounded-lg p-4 mb-6">
@@ -54,15 +66,12 @@
                                     class="text-blue-600 hover:text-blue-900 mr-3">
                                     <i class="fa fa-edit mr-1"></i>Bewerken
                                 </a>
-                                <form action="{{ route('planner.clients.destroy', $client->id) }}" method="post" class="inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit"
-                                            class="text-red-600 hover:text-red-900">
-                                        <i class="fa fa-trash mr-1"></i>Verwijderen
-                                    </button>
-                                </form>
-
+                                <button type="button"
+                                        class="text-red-600 hover:text-red-900 delete-btn"
+                                        data-url="{{ route('planner.clients.destroy', $client->id) }}"
+                                        data-name="{{ $client->name }}">
+                                    <i class="fa fa-trash mr-1"></i>Verwijderen
+                                </button>
                             </td>
                         </tr>
                     @empty
@@ -77,4 +86,71 @@
         </div>
     </div>
 </div>
+
+<!-- ====== Delete Modal (1x) ====== -->
+<div id="deleteModal" class="fixed inset-0 hidden items-center justify-center bg-black/50 z-50">
+    <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
+        <h2 class="text-lg font-semibold text-gray-900 mb-2">Bevestigen</h2>
+
+        <p class="text-gray-700 mb-6">
+            Weet je zeker dat je <span id="deleteClientName" class="font-semibold"></span> wilt verwijderen?
+        </p>
+
+        <div class="flex justify-end gap-3">
+            <button type="button"
+                    class="px-4 py-2 rounded-md border"
+                    onclick="closeDeleteModal()">
+                Annuleren
+            </button>
+
+            <button type="button"
+                    class="px-4 py-2 rounded-md text-white bg-red-600 hover:bg-red-700"
+                    onclick="confirmDelete()">
+                Ja, verwijderen
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Hidden delete form (1x) -->
+<form id="deleteForm" method="POST" class="hidden">
+    @csrf
+    @method('DELETE')
+</form>
+
+<script>
+    let deleteUrl = '';
+
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                deleteUrl = this.dataset.url;
+                document.getElementById('deleteClientName').textContent = this.dataset.name;
+
+                const modal = document.getElementById('deleteModal');
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            });
+        });
+
+        // optioneel: ESC sluit modal
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeDeleteModal();
+        });
+    });
+
+    function closeDeleteModal() {
+        const modal = document.getElementById('deleteModal');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        deleteUrl = '';
+    }
+
+    function confirmDelete() {
+        const form = document.getElementById('deleteForm');
+        form.action = deleteUrl;
+        form.submit();
+    }
+</script>
+
 @endsection
