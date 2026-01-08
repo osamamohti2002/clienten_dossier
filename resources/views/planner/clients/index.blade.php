@@ -27,20 +27,43 @@
             <h1 class="text-3xl font-bold text-gray-900">Cliënten</h1>
             <p class="text-gray-600 mt-1">Beheer cliënten</p>
         </div>
+        
     </div>
 
 
     <!-- Search -->
-    <div class="bg-white shadow rounded-lg p-4 mb-6">
-        <form method="GET" action="{{ route('planner.clients.index') }}" class="max-w-md">
-            <label class="block text-sm font-medium text-gray-700 mb-1">Zoeken</label>
+<div class="bg-white shadow rounded-lg p-4 mb-6">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+
+        <!-- Zoekveld -->
+        <form method="GET"
+              action="{{ route('planner.clients.index') }}"
+              class="w-full md:max-w-md">
+            <label class="block text-sm font-medium text-gray-700 mb-1">
+                Zoeken
+            </label>
             <input type="text"
-                    name="search"
-                    value="{{ request('search') }}"
-                    placeholder="Zoek op naam..."
-                    class="w-full border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                   name="search"
+                   value="{{ request('search') }}"
+                   placeholder="Zoek op naam..."
+                   class="w-full border border-gray-300 rounded-md p-2 text-sm
+                          focus:outline-none focus:ring-1 focus:ring-blue-500
+                          focus:border-blue-500">
         </form>
+
+        <!-- Nieuwe cliënt knop -->
+        <a href="{{ route('planner.clients.create') }}"
+           class="inline-flex items-center justify-center
+                  px-4 py-2 h-10
+                  border border-transparent text-sm font-medium
+                  rounded-md shadow-sm
+                  text-white bg-green-600 hover:bg-green-700">
+            <i class="fa fa-plus mr-2"></i>Nieuwe cliënt
+        </a>
+
     </div>
+</div>
+
 
     <!-- Clients table (placeholder) -->
     <div class="bg-white shadow overflow-hidden sm:rounded-md">
