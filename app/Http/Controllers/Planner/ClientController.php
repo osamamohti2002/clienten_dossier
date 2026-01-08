@@ -41,24 +41,8 @@ class ClientController extends Controller
 
     return redirect()->route('planner.clients.index')
         ->with('success', 'Cliënt toegevoegd.');
+    }
 }
-
-    public function destroy($id)
-    {
-        $client = Client::findOrFail($id);
-        $client->delete();
-
-        return redirect()->route('planner.clients.index')
-            ->with('success', 'Cliënt verwijderd.');
-        return redirect()->route('planner.clients.index')
-            ->with('success', 'Cliënt toegevoegd.');
-    }
-
-
-    public function edit(Client $client)
-    {
-        return view('planner.clients.edit', compact('client'));
-    }
 
     public function update(Request $request, Client $client)
     {
@@ -75,4 +59,21 @@ class ClientController extends Controller
         return redirect()->route('planner.clients.index')
             ->with('success', 'Cliënt bijgewerkt.');
     }
+
+        public function edit(Client $client)
+    {
+        return view('planner.clients.edit', compact('client'));
+    }
+
+    public function destroy($id)
+    {
+        $client = Client::findOrFail($id);
+        $client->delete();
+
+        return redirect()->route('planner.clients.index')
+            ->with('success', 'Cliënt verwijderd.');
+        return redirect()->route('planner.clients.index')
+            ->with('success', 'Cliënt toegevoegd.');
+    }
+
 }
