@@ -51,6 +51,14 @@ Route::middleware(['role:admin'])->group(function () {
 
     Route::post('/planner/routes', [RouteController::class, 'store'])
         ->name('planner.routes.store');
+
+            // Edit client
+    Route::get('/planner/clients/{id}/edit', [ClientController::class, 'edit'])
+        ->name('planner.clients.edit');
+
+    // Update client
+    Route::put('/planner/clients/{id}', [ClientController::class, 'update'])
+        ->name('planner.clients.update');
 });
 
 
