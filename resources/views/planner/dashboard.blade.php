@@ -80,10 +80,17 @@
                             — {{ ucfirst($route->shift) }}
                         </div>
 
-                        <div class="text-sm text-gray-600">
+                        <!-- <div class="text-sm text-gray-600">
                             {{ $route->datum }} | {{ $route->starttijd }} - {{ $route->eindtijd }}
+                        </div> -->
+                        <div class = "text-sm text-gray-600">
+                            {{ \Carbon\Carbon::parse($route->datum)->format('d/m/Y') }}
+                            |
+                            {{ \Carbon\Carbon::parse($route->starttijd)->format('H:i') }}
+                            -
+                            {{ \Carbon\Carbon::parse($route->eindtijd)->format('H:i') }}
                         </div>
-
+                        
                         <div class="text-sm text-gray-500">
                             Clients: {{ $route->visits?->count() ?? 0 }}
                         </div>
