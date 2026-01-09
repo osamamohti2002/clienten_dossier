@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Zorgpersoneel;
 use App\Models\Client;
+use App\Models\ClientRoute;
 
 class Route extends Model
 {
@@ -23,8 +24,12 @@ class Route extends Model
     }
 
     // Route has MANY clients
-    public function clients()
+    // public function clients()
+    // {
+    //     return $this->belongsToMany(Client::class, 'client_route');
+    // }
+    public function visits()
     {
-        return $this->belongsToMany(Client::class, 'client_route');
+        return $this->hasMany(ClientRoute::class);
     }
 }
