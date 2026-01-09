@@ -66,23 +66,55 @@
         <div class="divide-y divide-gray-200">
             @if(isset($routes) && $routes->count())
                 @foreach($routes as $route)
-                    <div class="px-4 py-4 sm:px-6 flex justify-between items-center">
-                        <div>
-                            <div class="font-semibold text-gray-900">
-                                {{ $route->zorgpersoneel->user->name ?? 'Onbekend' }}
-                                — {{ ucfirst($route->shift) }}
-                            </div>
+            <div class="border-b border-gray-200">
 
-                            <div class="text-sm text-gray-600">
-                                {{ $route->datum }} | {{ $route->starttijd }} - {{ $route->eindtijd }}
-                            </div>
+                <!-- Route header (clickable) -->
+                <button
+                    type="button"
+                    onclick="toggleRoute({{ $route->id }})"
+                    class="w-full text-left px-4 py-4 sm:px-6 flex justify-between items-center hover:bg-gray-50"
+                >
+                    <div>
+                        <div class="font-semibold text-gray-900">
+                            {{ $route->zorgpersoneel->user->name ?? 'Onbekend' }}
+                            — {{ ucfirst($route->shift) }}
+                        </div>
 
-                            <div class="text-sm text-gray-500">
-                                Cliënten: {{ $route->clients->count() }}
-                            </div>
+                        <div class="text-sm text-gray-600">
+                            {{ $route->datum }} | {{ $route->starttijd }} - {{ $route->eindtijd }}
+                        </div>
+
+                        <div class="text-sm text-gray-500">
+                            Clients: {{ $route->visits?->count() ?? 0 }}
                         </div>
                     </div>
-                @endforeach
+
+                    <div class="text-gray-400">
+                        ▼
+                    </div>
+                </button>
+
+                <!-- Dropdown content (hidden by default) -->
+                <div
+                    id="route-details-{{ $route->id }}"
+                    class="hidden bg-gray-50 px-6 py-4"
+                >
+                    @if($route->visits && $route->visits->count())
+                        <ul class="space-y-2">
+                            @foreach($route->visits as $visit)
+                                <li class="flex justify-between text-sm text-gray-700">
+                                    <span>{{ $visit->client->name }}</span>
+                                    <span class="text-gray-400">duration: not filled</span>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <p class="text-sm text-gray-500">No clients in this route.</p>
+                    @endif
+                </div>
+
+            </div>
+        @endforeach
             @else
                 <div class="px-4 py-6 sm:px-6 text-center text-gray-500">
                     Nog geen routes. Maak een nieuwe route aan om te starten.
@@ -92,4 +124,12 @@
     </div>
 
 </div>
+
+<script>
+    function toggleRoute(routeId) {
+        const el = document.getElementById('route-details-' + routeId);
+        el.classList.toggle('hidden');
+    }
+</script>
+
 @endsection
