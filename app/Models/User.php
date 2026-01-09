@@ -55,4 +55,9 @@ class User extends Authenticatable
     public function zorgpersoneel(){
         return $this->hasOne(Zorgpersoneel::class);
     }
+
+    public function visits()
+    {
+        return $this->hasMany(ClientRoute::class, 'zorgpersoneel_id');
+    }
 }

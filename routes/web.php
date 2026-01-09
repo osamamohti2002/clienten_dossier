@@ -4,37 +4,23 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Planner\ClientController;
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use \App\Models\User;
-use Symfony\Component\Routing\Annotation\Route as AnnotationRoute;
-use Symfony\Component\Routing\Attribute\Route as AttributeRoute;
-use Symfony\Component\Routing\Route as RoutingRoute;
 
 Route::get('/', [LoginController::class, 'showLoginForm'])->name('index');
 Route::post('/', [LoginController::class, 'login'])->name('login.post');
 
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
-// Route::get('/admin/dashboard', function(){
-//     return view('admin.dashboard');
-// })->name('admin.dashboard');
-
-Route::middleware(['role:admin'])->group(function(){
+Route::middleware(['role:admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 
-    Route::get('/admin/create',[AdminController::class,'create'])->name('admin.create');
-    Route::post('/admin/create',[AdminController::class,'store'])->name('admin.store');
+    Route::get('/admin/create', [AdminController::class, 'create'])->name('admin.create');
+    Route::post('/admin/create', [AdminController::class, 'store'])->name('admin.store');
 
-    Route::delete('/admin/users/{id}', [AdminController::class, 'destroy'])
-    ->name('admin.users.destroy');
-
-    Route::get('/admin/users/{id}/edit', [AdminController::class, 'edit'])
-    ->name('admin.users.edit');
-
-    Route::put('/admin/users/{id}', [AdminController::class, 'update'])
-    ->name('admin.users.update');
-    });
+    Route::delete('/admin/users/{id}', [AdminController::class, 'destroy'])->name('admin.users.destroy');
+    Route::get('/admin/users/{id}/edit', [AdminController::class, 'edit'])->name('admin.users.edit');
+    Route::put('/admin/users/{id}', [AdminController::class, 'update'])->name('admin.users.update');
+});
 
  
  
@@ -55,21 +41,10 @@ Route::middleware(['role:admin'])->group(function(){
 
         Route::delete('/planner/clients/{id}', [ClientController::class, 'destroy'])
             ->name('planner.clients.destroy');
-        Route::get('/planner/clients/{client}/edit', [ClientController::class, 'edit'])
-        ->name('planner.clients.edit');
-
-        Route::put('/planner/clients/{client}', [ClientController::class, 'update'])
-            ->name('planner.clients.update');
     });
 
-Route::middleware(['role:zorgpersoneel'])->group(function(){
-    Route::get('/zorg/dashboard', function(){
+Route::middleware(['role:zorgpersoneel'])->group(function () {
+    Route::get('/zorg/dashboard', function () {
         return view('zorg/dashboard');
     })->name('zorg.dashboard');
-});
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.view');
-    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 });
