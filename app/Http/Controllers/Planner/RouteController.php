@@ -9,7 +9,7 @@ use App\Models\Zorgpersoneel;
 use Illuminate\Http\Request;
 use App\Models\ClientRoute;
 use Carbon\Carbon;
-use GuzzleHttp\Exception\ClientException;
+;
 
 class RouteController extends Controller
 {
