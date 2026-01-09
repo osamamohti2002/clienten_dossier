@@ -23,7 +23,6 @@ return new class extends Migration
 
             $table->timestamps();
 
-            $table->unique(['route_id', 'client_id']);
         });
     }
 
