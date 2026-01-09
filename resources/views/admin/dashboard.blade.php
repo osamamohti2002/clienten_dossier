@@ -14,7 +14,7 @@
             <div class="bg-white overflow-hidden shadow rounded-lg">
                 <div class="px-4 py-5 sm:p-6 text-center">
                     <dt class="text-sm font-medium text-gray-500 truncate">Totaal cliënten</dt>
-                    <dd class="mt-1 text-5xl font-semibold text-gray-900">142</dd>
+                    <dd class="mt-1 text-5xl font-semibold text-gray-900">{{$clientsCount}}</dd>
                 </div>
             </div>
             <div class="bg-white overflow-hidden shadow rounded-lg">
@@ -26,7 +26,7 @@
             <div class="bg-white overflow-hidden shadow rounded-lg">
                 <div class="px-4 py-5 sm:p-6 text-center">
                     <dt class="text-sm font-medium text-gray-500 truncate">Totaal routes vandaag</dt>
-                    <dd class="mt-1 text-5xl font-semibold text-gray-900">63</dd>
+                    <dd class="mt-1 text-5xl font-semibold text-gray-900">{{$routesTodayCount}}</dd>
                 </div>
             </div>
         </div>
