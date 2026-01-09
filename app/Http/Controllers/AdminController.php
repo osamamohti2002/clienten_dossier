@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Client;
+use App\Models\Route;
 use App\Models\Zorgpersoneel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -27,8 +30,16 @@ class AdminController extends Controller
             ->get();
 
         $totalUsers = User::count();
+        $clientsCount = Client::count();
+        $routesTodayCount = Route::whereDate('datum', Carbon::today())->count();
 
-        return view('admin.dashboard', compact('users', 'totalUsers', 'search')); 
+        return view('admin.dashboard', compact(
+            'users',
+            'totalUsers',
+            'clientsCount',
+            'routesTodayCount',
+            'search'
+        ));
     }
 
     /**
