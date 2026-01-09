@@ -5,6 +5,8 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Planner\ClientController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Planner\RouteController;
+
 
 Route::get('/', [LoginController::class, 'showLoginForm'])->name('index');
 Route::post('/', [LoginController::class, 'login'])->name('login.post');
@@ -24,24 +26,33 @@ Route::middleware(['role:admin'])->group(function () {
 
  
  
-    Route::middleware(['role:planner'])->group(function(){
-        Route::get('/planner/dashboard', function(){
-            return view('planner/dashboard');
-        })->name('planner.dashboard');
-    
-        // Clients
-        Route::get('/planner/clients', [ClientController::class, 'index'])
-            ->name('planner.clients.index');
+    Route::middleware(['role:planner'])->group(function () {
 
-        Route::get('/planner/clients/create', [ClientController::class, 'create'])
-            ->name('planner.clients.create');
+    //  Planner dashboard
+    Route::get('/planner/dashboard', [RouteController::class, 'index'])
+        ->name('planner.dashboard');
 
-        Route::post('/planner/clients', [ClientController::class, 'store'])
-            ->name('planner.clients.store');
+    // Clients
+    Route::get('/planner/clients', [ClientController::class, 'index'])
+        ->name('planner.clients.index');
 
-        Route::delete('/planner/clients/{id}', [ClientController::class, 'destroy'])
-            ->name('planner.clients.destroy');
-    });
+    Route::get('/planner/clients/create', [ClientController::class, 'create'])
+        ->name('planner.clients.create');
+
+    Route::post('/planner/clients', [ClientController::class, 'store'])
+        ->name('planner.clients.store');
+
+    Route::delete('/planner/clients/{id}', [ClientController::class, 'destroy'])
+        ->name('planner.clients.destroy');
+
+    //  Routes 
+    Route::get('/planner/routes/create', [RouteController::class, 'create'])
+        ->name('planner.routes.create');
+
+    Route::post('/planner/routes', [RouteController::class, 'store'])
+        ->name('planner.routes.store');
+});
+
 
 Route::middleware(['role:zorgpersoneel'])->group(function () {
     Route::get('/zorg/dashboard', function () {
