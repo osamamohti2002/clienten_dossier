@@ -7,13 +7,14 @@ use App\Models\Client;
 use App\Models\Route;
 use App\Models\Zorgpersoneel;
 use Illuminate\Http\Request;
+use App\Models\ClientRoute;
 
 class RouteController extends Controller
 {
 
     public function index()
     {
-        $routes = Route::with(['zorgpersoneel.user', 'clients'])
+        $routes = Route::with(['zorgpersoneel.user', 'visits.client'])
             ->orderBy('datum', 'desc')
             ->orderByRaw("FIELD(shift,'ochtend','avond')")
             ->get();
@@ -53,7 +54,17 @@ class RouteController extends Controller
             'eindtijd'         => $data['eindtijd'],
         ]);
 
-        $route->clients()->sync($data['clients']);
+        // $route->clients()->sync($data['clients']);
+        foreach ($data['clients'] as $clientId) {
+        ClientRoute::create([
+            'route_id'         => $route->id,
+            'client_id'        => $clientId,
+            'zorgpersoneel_id' => $data['zorgpersoneel_id'],
+        ]);
+    }
+
+
+
 
         return redirect()
             ->route('planner.dashboard')
