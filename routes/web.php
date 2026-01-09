@@ -53,11 +53,11 @@ Route::middleware(['role:admin'])->group(function () {
         ->name('planner.routes.store');
 
             // Edit client
-    Route::get('/planner/clients/{id}/edit', [ClientController::class, 'edit'])
+    Route::get('/planner/clients/{client}/edit', [ClientController::class, 'edit'])
         ->name('planner.clients.edit');
 
     // Update client
-    Route::put('/planner/clients/{id}', [ClientController::class, 'update'])
+    Route::put('/planner/clients/{client}', [ClientController::class, 'update'])
         ->name('planner.clients.update');
 });
 

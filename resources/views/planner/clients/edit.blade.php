@@ -15,7 +15,7 @@
 
             <!-- Edit Form -->
             <div class="bg-white shadow rounded-lg p-6">
-                <form action="{{ route('planner.clients.update', $client) }}" method="POST" class="space-y-6">
+                <form action="{{ route('planner.clients.update', $client->id) }}" method="POST" class="space-y-6">
                     @csrf
                     @method('PUT')
 
