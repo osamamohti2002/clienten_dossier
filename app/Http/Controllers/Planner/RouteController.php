@@ -8,6 +8,8 @@ use App\Models\Route;
 use App\Models\Zorgpersoneel;
 use Illuminate\Http\Request;
 use App\Models\ClientRoute;
+use Carbon\Carbon;
+use GuzzleHttp\Exception\ClientException;
 
 class RouteController extends Controller
 {
@@ -19,7 +21,10 @@ class RouteController extends Controller
             ->orderByRaw("FIELD(shift,'ochtend','avond')")
             ->get();
 
-        return view('planner/dashboard', compact('routes'));
+        $routesTodayCount = Route::whereDate('datum', Carbon::today())->count();
+        $clientsCount = Client::count();
+
+        return view('planner/dashboard', compact('routes', 'routesTodayCount', "clientsCount"));
     }
 
 
