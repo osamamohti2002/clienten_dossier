@@ -10,14 +10,14 @@
         </div>
     @endif
 
-    <!-- Dashboard Title -->
-    <div class="mb-8 flex items-center justify-between">
+    <!-- Dashboard Title + Stats -->
+    <div class="mb-8 flex items-start justify-between gap-6">
         <div>
             <h1 class="text-3xl font-bold text-gray-900">Planner Dashboard</h1>
             <p class="text-gray-600 mt-2">Beheer planning en routes voor zorgpersoneel</p>
         </div>
 
-        <!-- Stats (placeholder, later dynamisch) -->
+        <!-- Stats -->
         <div class="hidden md:grid grid-cols-2 gap-4">
             <div class="bg-white shadow rounded-lg px-4 py-3 text-center">
                 <div class="text-xs text-gray-500">Routes vandaag</div>
@@ -30,10 +30,20 @@
                 <div class="text-2xl font-bold text-gray-900">
                     {{ $clientsCount ?? 0 }}
                 </div>
-                </div>
             </div>
         </div>
     </div>
+
+    @php
+        // helper voor shift styling (zoals admin badges/kleuren)
+        $shiftBadge = function ($shift) {
+            return match($shift) {
+                'ochtend' => ['label' => 'Ochtend', 'bg' => 'bg-yellow-100', 'text' => 'text-yellow-800', 'icon' => 'fa-sun-o', 'circle' => 'bg-yellow-100', 'circleText' => 'text-yellow-600'],
+                'avond'   => ['label' => 'Avond',   'bg' => 'bg-indigo-100', 'text' => 'text-indigo-800', 'icon' => 'fa-moon-o', 'circle' => 'bg-indigo-100', 'circleText' => 'text-indigo-600'],
+                default   => ['label' => ucfirst($shift ?? 'Onbekend'), 'bg' => 'bg-gray-100', 'text' => 'text-gray-800', 'icon' => 'fa-clock-o', 'circle' => 'bg-gray-100', 'circleText' => 'text-gray-600'],
+            };
+        };
+    @endphp
 
     <!-- Routes Overview -->
     <div class="bg-white shadow overflow-hidden sm:rounded-md mb-8">
@@ -43,14 +53,13 @@
                 <p class="mt-1 max-w-2xl text-sm text-gray-500">Direct overzicht van aangemaakte routes</p>
             </div>
 
-            {{-- ✅ Link to separate create page --}}
             <a href="{{ route('planner.routes.create') }}"
                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700">
                 <i class="fa fa-plus-circle mr-2"></i>Nieuwe route
             </a>
         </div>
 
-        <!-- Date Filter (still placeholder UI) -->
+        <!-- Date Filter (placeholder UI) -->
         <div class="px-4 py-3 bg-gray-50 border-t border-b border-gray-200">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between">
                 <div class="mb-4 md:mb-0">
@@ -58,6 +67,7 @@
                     <input type="date" id="route-date-filter"
                            class="mt-1 block w-full md:w-auto border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                 </div>
+
                 <div>
                     <button type="button"
                             class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
@@ -67,66 +77,89 @@
             </div>
         </div>
 
-        <!-- Routes List (dynamic) -->
+        <!-- Routes List -->
         <div class="divide-y divide-gray-200">
             @if(isset($routes) && $routes->count())
                 @foreach($routes as $route)
-            <div class="border-b border-gray-200">
+                    @php $s = $shiftBadge($route->shift); @endphp
 
-                <!-- Route header (clickable) -->
-                <button
-                    type="button"
-                    onclick="toggleRoute({{ $route->id }})"
-                    class="w-full text-left px-4 py-4 sm:px-6 flex justify-between items-center hover:bg-gray-50"
-                >
-                    <div>
-                        <div class="font-semibold text-gray-900">
-                            {{ $route->zorgpersoneel->user->name ?? 'Onbekend' }}
-                            — {{ ucfirst($route->shift) }}
-                        </div>
+                    <div class="border-b border-gray-200">
+                        <!-- Route header (clickable for dropdown) -->
+                        <button type="button"
+                                onclick="toggleRoute({{ $route->id }})"
+                                class="w-full text-left px-4 py-4 sm:px-6 hover:bg-gray-50 flex items-start justify-between gap-4">
 
-                        <!-- <div class="text-sm text-gray-600">
-                            {{ $route->datum }} | {{ $route->starttijd }} - {{ $route->eindtijd }}
-                        </div> -->
-                        <div class = "text-sm text-gray-600">
-                            {{ \Carbon\Carbon::parse($route->datum)->format('d/m/Y') }}
-                            |
-                            {{ \Carbon\Carbon::parse($route->starttijd)->format('H:i') }}
-                            -
-                            {{ \Carbon\Carbon::parse($route->eindtijd)->format('H:i') }}
-                        </div>
-                        
-                        <div class="text-sm text-gray-500">
-                            Clients: {{ $route->visits?->count() ?? 0 }}
+                            <div class="flex items-start gap-3">
+                                <!-- Rond icoon zoals admin -->
+                                <div class="h-10 w-10 flex-shrink-0 rounded-full {{ $s['circle'] }} flex items-center justify-center">
+                                    <i class="fa {{ $s['icon'] }} {{ $s['circleText'] }}"></i>
+                                </div>
+
+                                <div>
+                                    <!-- Titel -->
+                                    <div class="font-semibold text-gray-900">
+                                        Route: {{ $route->zorgpersoneel->user->name ?? 'Onbekend' }}
+                                    </div>
+
+                                    <!-- Badges -->
+                                    <div class="mt-1 flex flex-wrap gap-2">
+                                        <!-- Shift -->
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $s['bg'] }} {{ $s['text'] }}">
+                                            <i class="fa {{ $s['icon'] }} mr-1"></i>{{ $s['label'] }}
+                                        </span>
+
+                                        <!-- Datum -->
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                            <i class="fa fa-calendar mr-1"></i>
+                                            {{ \Carbon\Carbon::parse($route->datum)->format('d/m/Y') }}
+                                        </span>
+
+                                        <!-- Tijd -->
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                                            <i class="fa fa-clock-o mr-1"></i>
+                                            {{ \Carbon\Carbon::parse($route->starttijd)->format('H:i') }}
+                                            -
+                                            {{ \Carbon\Carbon::parse($route->eindtijd)->format('H:i') }}
+                                        </span>
+
+                                        <!-- Cliënten count -->
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                            <i class="fa fa-users mr-1"></i>
+                                            {{ $route->visits?->count() ?? 0 }} cliënten
+                                        </span>
+                                    </div>
+
+                                    <!-- (optioneel) Aangemaakt door -->
+                                    @if(isset($route->planner) && $route->planner)
+                                        <div class="mt-2 text-sm text-gray-500">
+                                            <i class="fa fa-user mr-1"></i>Aangemaakt door: {{ $route->planner->user->name ?? 'Onbekend' }}
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="text-gray-400 mt-1">
+                                <i class="fa fa-chevron-down"></i>
+                            </div>
+                        </button>
+
+                        <!-- Dropdown content -->
+                        <div id="route-details-{{ $route->id }}" class="hidden bg-gray-50 px-6 py-4">
+                            @if($route->visits && $route->visits->count())
+                                <ul class="space-y-2">
+                                    @foreach($route->visits as $visit)
+                                        <li class="flex justify-between text-sm text-gray-700">
+                                            <span>{{ $visit->client->name ?? 'Onbekend' }}</span>
+                                            <span class="text-gray-400">duur: nog niet ingevuld</span>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @else
+                                <p class="text-sm text-gray-500">Geen cliënten in deze route.</p>
+                            @endif
                         </div>
                     </div>
-
-                    <div class="text-gray-400">
-                        ⬇️
-                    </div>
-                </button>
-
-                <!-- Dropdown content (hidden by default) -->
-                <div
-                    id="route-details-{{ $route->id }}"
-                    class="hidden bg-gray-50 px-6 py-4"
-                >
-                    @if($route->visits && $route->visits->count())
-                        <ul class="space-y-2">
-                            @foreach($route->visits as $visit)
-                                <li class="flex justify-between text-sm text-gray-700">
-                                    <span>{{ $visit->client->name }}</span>
-                                    <span class="text-gray-400">duration: not filled</span>
-                                </li>
-                            @endforeach
-                        </ul>
-                    @else
-                        <p class="text-sm text-gray-500">No clients in this route.</p>
-                    @endif
-                </div>
-
-            </div>
-        @endforeach
+                @endforeach
             @else
                 <div class="px-4 py-6 sm:px-6 text-center text-gray-500">
                     Nog geen routes. Maak een nieuwe route aan om te starten.
@@ -140,8 +173,8 @@
 <script>
     function toggleRoute(routeId) {
         const el = document.getElementById('route-details-' + routeId);
+        if (!el) return;
         el.classList.toggle('hidden');
     }
 </script>
-
 @endsection
