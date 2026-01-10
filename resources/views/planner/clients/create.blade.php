@@ -34,6 +34,18 @@
                        required>
             </div>
 
+            <!-- Geslacht -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Geslacht</label>
+
+                <select name="gender"
+                        class="w-full border border-gray-300 rounded-md p-2 text-sm">
+                    <option value="unknown" @selected(old('gender') === 'unknown')>Onbekend</option>
+                    <option value="male" @selected(old('gender') === 'male')>Man</option>
+                    <option value="female" @selected(old('gender') === 'female')>Vrouw</option>
+                </select>
+            </div>
+
             <!-- BSN -->
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">

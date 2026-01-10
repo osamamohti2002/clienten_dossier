@@ -29,6 +29,7 @@ class ClientController extends Controller
             'bsn' => 'required|string|max:255|unique:clients,bsn',
             'phone' => 'nullable|string|max:50',
             'address' => 'nullable|string|max:255',
+            'gender' => 'nullable|in:male,female,unknown',
 
             'zorg' => 'nullable|array',
             'zorg.*' => 'nullable|integer|min:1|max:1440', 
@@ -39,6 +40,7 @@ class ClientController extends Controller
             'bsn' => $validated['bsn'],
             'phone' => $validated['phone'] ?? null,
             'address' => $validated['address'] ?? null,
+            'gender' => $validated['gender'] ?? 'unknown',
         ]);
 
         $zorgMomenten = $validated['zorg'] ?? [];
@@ -72,6 +74,8 @@ class ClientController extends Controller
             'bsn' => 'required|string|max:255|unique:clients,bsn,' . $client->id,
             'phone' => 'nullable|string|max:50',
             'address' => 'nullable|string|max:255',
+            'gender' => 'nullable|in:male,female,unknown',
+
 
             'zorg' => 'nullable|array',
             'zorg.*' => 'nullable|integer|min:1|max:1440',
@@ -82,6 +86,7 @@ class ClientController extends Controller
             'bsn' => $validated['bsn'],
             'phone' => $validated['phone'] ?? null,
             'address' => $validated['address'] ?? null,
+            'gender' => $validated['gender'] ?? 'unknown',
         ]);
 
         $client->zorgMomenten()->delete();

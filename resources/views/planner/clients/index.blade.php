@@ -99,9 +99,24 @@
                 <tbody class="bg-white divide-y divide-gray-200">
                     @forelse($clients as $client)
                         <tr>
+                            <!-- ✅ NAAM met gender icon -->
                             <td class="px-6 py-4 text-sm text-gray-900">
-                                {{ $client->name }}
+                                <div class="flex items-center gap-3">
+
+                                    @php
+                                        $gender = $client->gender ?? 'unknown';
+                                        $genderBg = $gender === 'male' ? 'bg-blue-100' : ($gender === 'female' ? 'bg-pink-100' : 'bg-gray-100');
+                                        $genderIcon = $gender === 'male' ? 'fa-male text-blue-600' : ($gender === 'female' ? 'fa-female text-pink-600' : 'fa-user text-gray-600');
+                                    @endphp
+
+                                    <div class="h-9 w-9 flex-shrink-0 rounded-full {{ $genderBg }} flex items-center justify-center">
+                                        <i class="fa {{ $genderIcon }}"></i>
+                                    </div>
+
+                                    <span class="font-medium text-gray-900">{{ $client->name }}</span>
+                                </div>
                             </td>
+
                             <td class="px-6 py-4 text-sm text-gray-700">
                                 {{ $client->address ?? '—' }}
                             </td>

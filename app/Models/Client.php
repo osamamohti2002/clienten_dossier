@@ -7,7 +7,7 @@ use App\Models\ClientZorgMoment;
 
 class Client extends Model
 {
-    protected $fillable = ['name', 'bsn', 'phone', 'address',];
+    protected $fillable = ['name', 'bsn', 'phone', 'address', 'gender'];
 
     public function visits()
     {
