@@ -13,7 +13,16 @@ return new class extends Migration
     {
         Schema::create('client_zorg_moments', function (Blueprint $table) {
             $table->id();
+
+
+            $table->foreignId('client_id')
+            ->constrained()
+            ->cascadeOnDelete();
+
+            $table->string('moment');
+            $table->unsignedInteger('duration_minutes');
             $table->timestamps();
+
         });
     }
 
