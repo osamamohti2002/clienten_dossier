@@ -28,14 +28,14 @@
 
                 <!-- Right: Profile & Logout -->
                 <div class="flex items-center space-x-4">
-                    <div class="flex items-center text-sm rounded-full">
+                    <a href="{{ route('profile.view') }}" class="flex items-center text-sm rounded-full">
                         <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
                             <i class="fa fa-user text-blue-600"></i>
                         </div>
                         <span class="ml-2 hidden md:block">
                             {{ auth()->user()->name ?? 'Planner' }}
                         </span>
-                    </div>
+                    </a>
 
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
