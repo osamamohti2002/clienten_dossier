@@ -108,21 +108,29 @@
                             </td>
 
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                <a href="{{route('admin.users.edit', $user->id) }}"
-                                    class="text-blue-600 hover:text-blue-900 mr-3 inline-flex items-center">
-                                    <i class="fa fa-edit mr-1"></i>Bewerken
-                                </a>
-                                {{-- <button type="button" class="text-blue-600 hover:text-blue-900 mr-3">
-                                    <i class="fa fa-edit mr-1"></i>Bewerken
-                                </button> --}}
+                                @if(auth()->id() !== $user->id)
+                                    <!-- Edit button -->
+                                    <a href="{{ route('admin.users.edit', $user->id) }}"
+                                        class="text-blue-600 hover:text-blue-900 mr-3 inline-flex items-center">
+                                        <i class="fa fa-edit mr-1"></i>Bewerken
+                                    </a>
 
-                                <!-- Delete knop (opent modal) -->
-                                <button type="button"
-                                        class="text-red-600 hover:text-red-900 delete-btn"
-                                        data-url="{{ route('admin.users.destroy', $user->id) }}"
-                                        data-name="{{ $user->name }}">
-                                    <i class="fa fa-trash-alt mr-1"></i>Verwijderen
-                                </button>
+                                    <!-- Delete button -->
+                                    <button type="button"
+                                            class="text-red-600 hover:text-red-900 delete-btn"
+                                            data-url="{{ route('admin.users.destroy', $user->id) }}"
+                                            data-name="{{ $user->name }}">
+                                        <i class="fa fa-trash-alt mr-1"></i>Verwijderen
+                                    </button>
+                                @else
+                                    <!-- Disabled buttons for current admin -->
+                                    <span class="text-gray-400 mr-3 inline-flex items-center cursor-not-allowed">
+                                        <i class="fa fa-edit mr-1"></i>Bewerken
+                                    </span>
+                                    <span class="text-gray-400 cursor-not-allowed">
+                                        <i class="fa fa-trash-alt mr-1"></i>Verwijderen
+                                    </span>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

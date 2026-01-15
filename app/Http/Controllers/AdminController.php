@@ -26,7 +26,7 @@ class AdminController extends Controller
                 $query->where('name', 'like', "%{$search}%")
                     ->orWhere('email', 'like', "%{$search}%");
             })
-            ->limit(5)
+            ->limit(20)
             ->get();
 
         $totalUsers = User::count();
@@ -93,6 +93,12 @@ class AdminController extends Controller
      */
     public function edit(string $id)
     {
+        // Prevent admin from editing themselves
+        if (auth()->id() == $id) {
+            return redirect()->route('admin.dashboard')
+                ->with('error', 'Je kunt je eigen account niet bewerken.');
+        }
+        
         $user = User::with('role')->findOrFail($id);
         $roles = Role::all();
         return view('admin.users.edit', compact('user', 'roles'));
@@ -103,6 +109,12 @@ class AdminController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // Prevent admin from updating themselves
+        if (auth()->id() == $id) {
+            return redirect()->route('admin.dashboard')
+                ->with('error', 'Je kunt je eigen account niet bijwerken.');
+        }
+        
         $user = User::findOrFail($id);
         $data = $request->validate([
             'name' => 'required|string|max:255',
@@ -119,7 +131,7 @@ class AdminController extends Controller
         $user->update($data);
 
         return redirect()->route('admin.dashboard')
-            ->with('success', 'Mederwerker bijgewerkt.');
+            ->with('success', 'Medewerker bijgewerkt.');
     }
 
     /**
@@ -127,10 +139,16 @@ class AdminController extends Controller
      */
     public function destroy(string $id)
     {
+        // Prevent admin from deleting themselves
+        if (auth()->id() == $id) {
+            return redirect()->route('admin.dashboard')
+                ->with('error', 'Je kunt je eigen account niet verwijderen.');
+        }
+        
         $user = User::findOrFail($id);
         $user->delete();
 
         return redirect()->route('admin.dashboard')
-        ->with('success', 'Medewerker verwijderen.');
+            ->with('success', 'Medewerker verwijderd.');
     }
 }
