@@ -9,7 +9,7 @@
                     <h2 class="text-3xl font-bold text-gray-900">Bewerk Profiel</h2>
                     <a href="{{ route('profile.view') }}" 
                        class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition duration-200">
-                        Back to Profile
+                        Terug
                     </a>
                 </div>
 
@@ -35,12 +35,11 @@
                                          class="h-32 w-32 rounded-full object-cover border-4 border-gray-200">
                                 @else
                                     <div id="avatar-preview" class="h-32 w-32 rounded-full bg-gray-300 flex items-center justify-center border-4 border-gray-200">
-                                        <i class="fa fa-user" aria-hidden="true"></i>
-
+                                        <i class="fa fa-user text-gray-600 text-4xl"></i>
                                     </div>
                                 @endif
                             </div>
-                            <div class="flex-1">
+                            <div>
                                 <label for="avatar" class="block text-sm font-medium text-gray-700 mb-2">
                                     Upload Nieuwe Foto
                                 </label>
@@ -48,8 +47,8 @@
                                        id="avatar" 
                                        name="avatar" 
                                        accept="image/*"
-                                       class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-                                <p class="mt-2 text-sm text-gray-500">JPEG, PNG, JPG or GIF (Max: 10MB)</p>
+                                       class="block w-full text-sm text-gray-500">
+                                <p class="mt-2 text-sm text-gray-500">Max 10MB</p>
                                 @error('avatar')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
@@ -61,97 +60,119 @@
                     <div class="bg-gray-50 rounded-xl p-6">
                         <h4 class="text-xl font-semibold text-gray-900 mb-6">Persoonlijke Informatie</h4>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <!-- Name Field -->
+                            <!-- Name -->
                             <div>
-                                <label for="name" class="block text-sm font-medium text-gray-700">Volledige Naam *</label>
-                                <input type="text" 
-                                       id="name" 
-                                       name="name" 
-                                       value="{{ old('name', $user->name) }}"
-                                       required
-                                       class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                                @error('name')
-                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
+                                <label class="block text-sm font-medium text-gray-700">Naam</label>
+                                @if($user->role->name === 'admin')
+                                    <input type="text" 
+                                           name="name" 
+                                           value="{{ old('name', $user->name) }}"
+                                           required
+                                           class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                                    @error('name')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                @else
+                                    <p class="mt-1 text-lg text-gray-900 bg-gray-100 p-3 rounded">{{ $user->name }}</p>
+                                @endif
                             </div>
 
-                            <!-- Email Field -->
+                            <!-- Email -->
                             <div>
-                                <label for="email" class="block text-sm font-medium text-gray-700">Email Address *</label>
-                                <input type="email" 
-                                       id="email" 
-                                       name="email" 
-                                       value="{{ old('email', $user->email) }}"
-                                       required
-                                       class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                                @error('email')
-                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
+                                <label class="block text-sm font-medium text-gray-700">Email</label>
+                                @if($user->role->name === 'admin')
+                                    <input type="email" 
+                                           name="email" 
+                                           value="{{ old('email', $user->email) }}"
+                                           required
+                                           class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                                    @error('email')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                @else
+                                    <p class="mt-1 text-lg text-gray-900 bg-gray-100 p-3 rounded">{{ $user->email }}</p>
+                                @endif
                             </div>
 
-                            <!-- Phone Field -->
+                            <!-- Phone -->
                             <div>
-                                <label for="phone" class="block text-sm font-medium text-gray-700">Telefoon</label>
-                                <input type="tel" 
-                                       id="phone" 
-                                       name="phone" 
-                                       value="{{ old('phone', $user->phone) }}"
-                                       class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                                       placeholder="+31 6 12345678">
-                                @error('phone')
-                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
+                                <label class="block text-sm font-medium text-gray-700">Telefoon</label>
+                                @if($user->role->name === 'admin')
+                                    <input type="tel" 
+                                           name="phone" 
+                                           value="{{ old('phone', $user->phone) }}"
+                                           class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                                    @error('phone')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                @else
+                                    <p class="mt-1 text-lg text-gray-900 bg-gray-100 p-3 rounded">{{ $user->phone ?? 'Niet opgegeven' }}</p>
+                                @endif
                             </div>
                         </div>
+                        @if($user->role->name !== 'admin')
+                            <p class="mt-4 text-sm text-gray-500 italic">
+                                <i class="fa fa-info-circle mr-1"></i>Alleen administrators kunnen persoonlijke informatie wijzigen
+                            </p>
+                        @endif
                     </div>
 
-                    <!-- Password Change (Optional) -->
+                    <!-- Password Change -->
                     <div class="bg-gray-50 rounded-xl p-6">
                         <h4 class="text-xl font-semibold text-gray-900 mb-6">Wijzig Wachtwoord</h4>
-                        <div class="space-y-6">
+                        <div class="space-y-4">
                             <div>
-                                <label for="current_password" class="block text-sm font-medium text-gray-700">Huidig Wachtwoord</label>
+                                <label class="block text-sm font-medium text-gray-700">Huidig wachtwoord</label>
                                 <input type="password" 
-                                       id="current_password" 
                                        name="current_password"
-                                       class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                       class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
                                 @error('current_password')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
-
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label for="password" class="block text-sm font-medium text-gray-700">Nieuw Wachtwoord</label>
-                                    <input type="password" 
-                                           id="password" 
-                                           name="password"
-                                           class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                                    @error('password')
-                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                    @enderror
-                                </div>
-
-                                <div>
-                                    <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Bevestig Nieuw Wachtwoord</label>
-                                    <input type="password" 
-                                           id="password_confirmation" 
-                                           name="password_confirmation"
-                                           class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                                </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Nieuw wachtwoord</label>
+                                <input type="password" 
+                                       name="password"
+                                       class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                                @error('password')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Bevestig wachtwoord</label>
+                                <input type="password" 
+                                       name="password_confirmation"
+                                       class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
                             </div>
                         </div>
                     </div>
 
+                    <!-- Delete Account (Admin only) -->
+                    @if($user->role->name === 'admin')
+                        <div class="bg-red-50 border border-red-200 rounded-xl p-6">
+                            <h4 class="text-xl font-semibold text-red-900 mb-4">Verwijder Account</h4>
+                            <p class="text-red-700 mb-4">
+                                <i class="fa fa-exclamation-triangle mr-2"></i>
+                                Waarschuwing: Dit verwijdert je account permanent.
+                            </p>
+                            <button type="button"
+                                    onclick="confirmDelete()"
+                                    class="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                                <i class="fa fa-trash-alt mr-2"></i>Account Verwijderen
+                            </button>
+                        </div>
+                    @endif
+
                     <!-- Form Actions -->
                     <div class="flex items-center justify-end space-x-4 pt-6 border-t border-gray-200">
                         <a href="{{ route('profile.view') }}" 
-                           class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition duration-200">
+                           class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50">
                             Annuleer
                         </a>
                         <button type="submit" 
-                                class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-200">
-                            Wijzigingen Opslaan
+                                class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                            Opslaan
                         </button>
                     </div>
                 </form>
@@ -160,31 +181,72 @@
     </div>
 </div>
 
-<script>
-function previewImage(event) {
-    const reader = new FileReader();
-    const preview = document.getElementById('avatar-preview');
-    
-    reader.onload = function() {
-        if (preview.tagName === 'IMG') {
-            preview.src = reader.result;
-        } else {
-            // Convert div to img
-            const img = document.createElement('img');
-            img.id = 'avatar-preview';
-            img.src = reader.result;
-            img.alt = 'Profile Avatar';
-            img.className = 'h-32 w-32 rounded-full object-cover border-4 border-gray-200';
-            preview.parentNode.replaceChild(img, preview);
-        }
-    }
-    
-    if (event.target.files[0]) {
-        reader.readAsDataURL(event.target.files[0]);
-    }
-}
+<!-- Simple Delete Modal -->
+<div id="deleteModal" class="fixed inset-0 hidden items-center justify-center bg-black/50 z-50">
+    <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
+        <h2 class="text-lg font-semibold text-red-700 mb-2">Account verwijderen?</h2>
+        <p class="text-gray-700 mb-6">Weet je het zeker? Dit kan niet ongedaan gemaakt worden.</p>
+        
+        <form id="deleteForm" action="{{ route('profile.destroy') }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Voer je wachtwoord in om te bevestigen</label>
+                    <input type="password" 
+                           name="password" 
+                           required
+                           class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div class="flex justify-end gap-3">
+                    <button type="button"
+                            class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
+                            onclick="closeDeleteModal()">
+                        Annuleren
+                    </button>
+                    <button type="submit"
+                            class="px-4 py-2 rounded-lg text-white bg-red-600 hover:bg-red-700">
+                        Verwijderen
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
-// Attach the preview function to file input
-document.getElementById('avatar').addEventListener('change', previewImage);
+<script>
+    // Avatar preview
+    document.getElementById('avatar').addEventListener('change', function(e) {
+        const reader = new FileReader();
+        const preview = document.getElementById('avatar-preview');
+        
+        reader.onload = function() {
+            if (preview.tagName === 'IMG') {
+                preview.src = reader.result;
+            } else {
+                const img = document.createElement('img');
+                img.id = 'avatar-preview';
+                img.src = reader.result;
+                img.alt = 'Profile Avatar';
+                img.className = 'h-32 w-32 rounded-full object-cover border-4 border-gray-200';
+                preview.parentNode.replaceChild(img, preview);
+            }
+        }
+        
+        if (e.target.files[0]) {
+            reader.readAsDataURL(e.target.files[0]);
+        }
+    });
+
+    // Delete modal
+    function confirmDelete() {
+        document.getElementById('deleteModal').classList.remove('hidden');
+        document.getElementById('deleteModal').classList.add('flex');
+    }
+
+    function closeDeleteModal() {
+        document.getElementById('deleteModal').classList.add('hidden');
+        document.getElementById('deleteModal').classList.remove('flex');
+    }
 </script>
 @endsection
