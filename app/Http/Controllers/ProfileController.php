@@ -59,8 +59,9 @@ class ProfileController extends Controller
             if ($user->avatar) {
                 Storage::disk('public')->delete($user->avatar);
             }
-            
-            $path = $request->file('avatar')->store('avatars', 'public');
+
+            // Slaat op in storage/app/public/media/avatars
+            $path = $request->file('avatar')->store('media/avatars', 'public');
             $user->avatar = $path;
         }
 
