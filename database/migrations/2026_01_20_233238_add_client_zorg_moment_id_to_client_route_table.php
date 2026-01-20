@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('routes', function (Blueprint $table) {
-            $table->time('eindtijd')->nullable()->after('starttijd');
+        Schema::table('client_route', function (Blueprint $table) {
+            $table->foreignId('client_zorg_moment_id')
+                ->nullable()
+                ->constrained('client_zorg_moments')
+                ->nullOnDelete();
         });
     }
 
@@ -21,8 +24,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('routes', function (Blueprint $table) {
-            $table->dropColumn('eindtijd');
+        Schema::table('client_route', function (Blueprint $table) {
+            //
         });
     }
 };

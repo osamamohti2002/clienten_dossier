@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('client_route', function (Blueprint $table) {
 
             if (!Schema::hasColumn('client_route', 'sequence')) {
-                $table->unsignedInteger('sequence')->default(1)->after('client_zorg_moment_id');
+                $table->unsignedInteger('sequence')->default(1);
             }
 
             if (!Schema::hasColumn('client_route', 'start_time')) {
