@@ -20,14 +20,6 @@
         </div>
     @endif
 
-    {{-- Terug --}}
-    <div class="mt-8">
-        <a href="{{ route('zorg.clients.index') }}"
-           class="text-gray-600 hover:text-gray-900">
-            ← Terug naar cliënten
-        </a>
-    </div>
-
     {{-- NIEUWE RAPPORTAGE --}}
     <div class="bg-white shadow rounded-lg p-6 mb-8">
         <h2 class="text-lg font-semibold text-gray-900 mb-3">
@@ -80,16 +72,12 @@
                                 Bewerken
                             </a>
 
-                            <form method="POST"
-                                  action="{{ route('zorg.reports.destroy', $report) }}"
-                                  onsubmit="return confirm('Rapportage verwijderen?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit"
-                                        class="text-red-600 hover:text-red-900">
-                                    Verwijderen
-                                </button>
-                            </form>
+                            {{-- Delete knop opent modal --}}
+                            <button type="button"
+                                    class="text-red-600 hover:text-red-900 delete-btn"
+                                    data-url="{{ route('zorg.reports.destroy', $report) }}">
+                                Verwijderen
+                            </button>
                         </div>
                     @endif
                 </div>
@@ -105,5 +93,80 @@
         @endforelse
     </div>
 
+    {{-- Terug --}}
+    <div class="mt-8">
+        <a href="{{ route('zorg.clients.index') }}"
+           class="text-gray-600 hover:text-gray-900">
+            ← Terug naar cliënten
+        </a>
+    </div>
+
 </div>
+
+<!-- ===== Delete Modal (1x) ===== -->
+<div id="deleteModal" class="fixed inset-0 hidden items-center justify-center bg-black/50 z-50">
+    <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
+        <h2 class="text-lg font-semibold text-gray-900 mb-2">Rapportage verwijderen</h2>
+
+        <p class="text-gray-700 mb-6">
+            Weet je zeker dat je deze rapportage wilt verwijderen?
+            <br>
+            <span class="text-sm text-gray-500">Deze actie kan niet ongedaan worden gemaakt.</span>
+        </p>
+
+        <div class="flex justify-end gap-3">
+            <button type="button"
+                    class="px-4 py-2 rounded-md border"
+                    onclick="closeDeleteModal()">
+                Annuleren
+            </button>
+
+            <button type="button"
+                    class="px-4 py-2 rounded-md text-white bg-red-600 hover:bg-red-700"
+                    onclick="confirmDelete()">
+                Verwijderen
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Hidden delete form (1x) -->
+<form id="deleteForm" method="POST" class="hidden">
+    @csrf
+    @method('DELETE')
+</form>
+
+<script>
+    let deleteUrl = '';
+
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                deleteUrl = this.dataset.url;
+
+                const modal = document.getElementById('deleteModal');
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            });
+        });
+
+        // ESC sluit modal
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closeDeleteModal();
+        });
+    });
+
+    function closeDeleteModal() {
+        const modal = document.getElementById('deleteModal');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        deleteUrl = '';
+    }
+
+    function confirmDelete() {
+        const form = document.getElementById('deleteForm');
+        form.action = deleteUrl;
+        form.submit();
+    }
+</script>
 @endsection

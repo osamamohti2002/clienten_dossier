@@ -74,4 +74,19 @@ class ReportController extends Controller
             ->route('zorg.reports.index', $report->client_id)
             ->with('success', 'Rapportage bijgewerkt.');
     }
+
+    public function destroy(Report $report)
+    {
+        if ($report->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $clientId = $report->client_id;
+
+        $report->delete();
+
+        return redirect()
+            ->route('zorg.reports.index', $clientId)
+            ->with('success', 'Rapportage verwijderd.');
+    }
 }
