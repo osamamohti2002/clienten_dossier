@@ -7,7 +7,8 @@ use App\Http\Controllers\Planner\ClientController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Planner\RouteController;
-
+use App\Http\Controllers\ZorgPersoneelController;
+use App\Models\Zorgpersoneel;
 
 Route::get('/', [LoginController::class, 'showLoginForm'])->name('index');
 Route::post('/', [LoginController::class, 'login'])->name('login.post');
@@ -71,8 +72,14 @@ Route::middleware('auth')->group(function () {
 });
 
 
+
+
 Route::middleware(['role:zorgpersoneel'])->group(function () {
-    Route::get('/zorg/dashboard', function () {
-        return view('zorg/dashboard');
-    })->name('zorg.dashboard');
+
+    Route::get('/zorg/dashboard', [ZorgPersoneelController::class, 'dashboard'])
+        ->name('zorg.dashboard');
+
+    Route::get('/zorg/clients', [ZorgPersoneelController::class, 'clients'])
+        ->name('zorg.clients.index');
+
 });
