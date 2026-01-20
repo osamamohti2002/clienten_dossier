@@ -80,17 +80,6 @@
                         @enderror
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Eindtijd *</label>
-                        <input name="eindtijd" type="time"
-                               class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 sm:text-sm"
-                               value="09:30"
-                               required>
-                        @error('eindtijd')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
-
                     <div class="md:col-span-2">
                         <label class="block text-sm font-medium text-gray-700">Cliënten selecteren *</label>
                         <select name="clients[]" multiple
