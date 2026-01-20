@@ -42,5 +42,36 @@ class ReportController extends Controller
             ->with('success', 'Rapportage opgeslagen.');
     }
 
-    // Stap 4 doen we: edit/update/destroy + beveiliging (alleen eigen)
+    public function edit(Report $report)
+    {
+        // ✅ Beveiliging: alleen eigenaar mag bewerken
+        if ($report->user_id !== auth()->id()) {
+            abort(403, 'Je mag alleen je eigen rapportage bewerken.');
+        }
+
+        // Voor de "terug naar rapportages" link hebben we de client nodig
+        $report->load('client');
+
+        return view('zorg.reports.edit', compact('report'));
+    }
+
+    public function update(Request $request, Report $report)
+    {
+        // ✅ Beveiliging: alleen eigenaar mag updaten
+        if ($report->user_id !== auth()->id()) {
+            abort(403, 'Je mag alleen je eigen rapportage bijwerken.');
+        }
+
+        $validated = $request->validate([
+            'report' => ['required', 'string', 'min:3'],
+        ]);
+
+        $report->update([
+            'report' => $validated['report'],
+        ]);
+
+        return redirect()
+            ->route('zorg.reports.index', $report->client_id)
+            ->with('success', 'Rapportage bijgewerkt.');
+    }
 }
