@@ -19,4 +19,9 @@ class Client extends Model
         return $this->hasMany(ClientZorgMoment::class);
     }
 
+    public function measurements()
+    {
+        return $this->hasMany(Measurement::class);
+    }
+
 }

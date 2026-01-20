@@ -60,4 +60,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(ClientRoute::class, 'zorgpersoneel_id');
     }
+
+    public function measurements()
+    {
+        return $this->hasMany(Measurement::class);
+    }
 }
