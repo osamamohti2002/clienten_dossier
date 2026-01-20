@@ -82,4 +82,11 @@ Route::middleware(['role:zorgpersoneel'])->group(function () {
     Route::get('/zorg/clients', [ZorgPersoneelController::class, 'clients'])
         ->name('zorg.clients.index');
 
+    Route::get('/zorg/clients/{client}/reports', [ZorgPersoneelController::class, 'reports'])
+        ->name('zorg.clients.reports');
+
+    Route::post('/zorg/clients/{client}/reports', [ZorgPersoneelController::class, 'storeReport'])
+    ->name('zorg.clients.reports.store');
+
+
 });
