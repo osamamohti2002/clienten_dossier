@@ -1,122 +1,208 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="px-4 py-6 sm:px-0">
+<div class="max-w-5xl mx-auto p-6">
 
-    <!-- (Optional) Page title like dashboard style -->
-    <div class="mb-8 flex items-center justify-between">
+    <h1 class="text-2xl font-bold mb-4">Planning aanmaken (Model B)</h1>
+
+    @if ($errors->any())
+        <div class="mb-4 p-3 rounded bg-red-50 text-red-800">
+            <ul class="list-disc ml-5">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <form method="POST" action="{{ route('planner.routes.store') }}" class="space-y-6" id="planningForm">
+        @csrf
+
+        {{-- Zorgpersoneel --}}
         <div>
-            <h1 class="text-3xl font-bold text-gray-900">Nieuwe route</h1>
-            <p class="text-gray-600 mt-2">Vul de gegevens in om een nieuwe route te maken</p>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Zorgpersoneel</label>
+            <select name="zorgpersoneel_id" class="w-full border rounded p-2" required>
+                <option value="">Selecteer...</option>
+                @foreach($zorgpersoneel as $zp)
+                    <option value="{{ $zp->id }}" {{ old('zorgpersoneel_id') == $zp->id ? 'selected' : '' }}>
+                        {{ $zp->user->name ?? 'Onbekend' }}
+                    </option>
+                @endforeach
+            </select>
         </div>
 
-        <a href="{{ route('planner.dashboard') }}"
-           class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
-            Terug
-        </a>
-    </div>
-
-    <!-- New Route Form (same card design as your hidden one) -->
-    <div class="bg-white shadow overflow-hidden sm:rounded-md mb-8">
-        <div class="px-4 py-5 sm:px-6 border-b border-gray-200">
-            <h3 class="text-lg leading-6 font-medium text-gray-900">Nieuwe route aanmaken</h3>
-            <p class="mt-1 text-sm text-gray-500">Vul de gegevens in om een nieuwe route te maken</p>
+        {{-- Datum --}}
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Datum</label>
+            <input type="date" name="datum" value="{{ old('datum') }}" class="w-full border rounded p-2" required>
         </div>
 
-        <form method="POST" action="{{ route('planner.routes.store') }}">
-            @csrf
+        {{-- Shift --}}
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Shift</label>
+            <select name="shift" id="shiftSelect" class="w-full border rounded p-2" required>
+                <option value="ochtend" {{ old('shift', 'ochtend') === 'ochtend' ? 'selected' : '' }}>Ochtend</option>
+                <option value="avond" {{ old('shift') === 'avond' ? 'selected' : '' }}>Avond</option>
+            </select>
+            <p class="text-xs text-gray-500 mt-1">
+                Ochtendplanning: ochtend + eind van de ochtend. Avondplanning: middag + avond.
+            </p>
+        </div>
 
-            <div class="px-4 py-5 sm:p-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {{-- Starttijd --}}
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Starttijd</label>
+            <input type="time" name="starttijd" value="{{ old('starttijd') }}" class="w-full border rounded p-2" required>
+        </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Zorgmedewerker *</label>
-                        <select name="zorgpersoneel_id"
-                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 sm:text-sm"
-                                required>
-                            <option value="">Selecteer zorgmedewerker</option>
-                            @foreach($zorgpersoneel as $zp)
-                                <option value="{{ $zp->id }}">
-                                    {{ $zp->user->name ?? 'Onbekend' }}
-                                </option>
+        {{-- Visits selectie --}}
+        <div class="mt-6">
+            <h2 class="text-lg font-semibold mb-3">Kies zorgmomenten (elk aangevinkt moment = 1 bezoek)</h2>
+
+            @php $i = 0; @endphp
+
+            @foreach($clients as $client)
+                <div class="border rounded p-4 mb-4">
+                    <div class="font-semibold mb-2">
+                        {{ $client->naam ?? $client->name ?? ('Client #'.$client->id) }}
+                    </div>
+
+                    @if($client->zorgMomenten->isEmpty())
+                        <div class="text-sm text-red-600">Geen zorgmomenten gevonden.</div>
+                    @else
+                        <div class="space-y-2">
+                            @foreach($client->zorgMomenten as $moment)
+                                @php
+                                    // moment naam als "key" voor filtering (lowercase)
+                                    $momentKey = mb_strtolower(trim($moment->moment ?? ''));
+                                @endphp
+                                @php
+                                    $isUsed = in_array($moment->id, $usedMomentIds ?? []);
+                                @endphp
+
+                                <div
+                                    class="visit-row flex items-center gap-3 text-sm"
+                                    @if($isUsed) style="opacity: 0.5;" title="Dit zorgmoment is al ingepland op deze datum." @endif
+                                    data-moment="{{ strtolower($momentKey) }}"
+                                >
+                                    <input
+                                        type="checkbox"
+                                        class="visit-checkbox"
+                                        name="visits[{{ $i }}][enabled]"
+                                        value="1"
+                                        id="visit_{{ $i }}"
+                                        {{ $isUsed ? 'disabled' : '' }}
+                                    >
+
+                                    <label class="w-64 cursor-pointer" for="visit_{{ $i }}">
+                                        {{ $moment->moment }} ({{ $moment->duration_minutes }} min)
+                                        @if ($isUsed)
+                                            <span class="text-red-600 ml-2">(al ingepland)</span>
+                                        @endif
+                                    </label>
+
+                                    <input type="hidden" name="visits[{{ $i }}][client_id]" value="{{ $client->id }}">
+                                    <input type="hidden" name="visits[{{ $i }}][client_zorg_moment_id]" value="{{ $moment->id }}">
+
+                                    <span class="text-gray-600">Volgorde:</span>
+
+                                    <input
+                                        type="number"
+                                        class="visit-sequence w-24 border rounded px-2 py-1"
+                                        name="visits[{{ $i }}][sequence]"
+                                        value=""
+                                        min="1"
+                                        placeholder="-"
+                                        disabled
+                                    >
+                                </div>
+                                @php $i++; @endphp
                             @endforeach
-                        </select>
-                        @error('zorgpersoneel_id')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Datum *</label>
-                        <input name="datum" type="date"
-                               class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 sm:text-sm"
-                               required>
-                        @error('datum')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Shift *</label>
-                        <select name="shift"
-                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 sm:text-sm"
-                                required>
-                            <option value="ochtend">Ochtend</option>
-                            <option value="avond">Avond</option>
-                        </select>
-                        @error('shift')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Starttijd *</label>
-                        <input name="starttijd" type="time"
-                               class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 sm:text-sm"
-                               value="08:30"
-                               required>
-                        @error('starttijd')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <div class="md:col-span-2">
-                        <label class="block text-sm font-medium text-gray-700">Cliënten selecteren *</label>
-                        <select name="clients[]" multiple
-                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 sm:text-sm h-32"
-                                required>
-                            @foreach($clients as $client)
-                                <option value="{{ $client->id }}">
-                                    {{ $client->name }} ({{ $client->address }})
-                                </option>
-                            @endforeach
-                        </select>
-                        <p class="mt-1 text-sm text-gray-500">Houd Ctrl ingedrukt om meerdere cliënten te selecteren</p>
-
-                        @error('clients')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                        @error('clients.*')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
-
+                        </div>
+                    @endif
                 </div>
+            @endforeach
+        </div>
 
-                <div class="mt-6 flex justify-end space-x-3">
-                    <a href="{{ route('planner.dashboard') }}"
-                       class="py-2 px-4 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
-                        Annuleren
-                    </a>
-
-                    <button type="submit"
-                            class="py-2 px-4 border border-transparent rounded-md text-sm font-medium text-white bg-green-600 hover:bg-green-700">
-                        Route aanmaken
-                    </button>
-                </div>
-            </div>
-        </form>
-    </div>
-
+        <button type="submit" class="px-4 py-2 rounded bg-blue-600 text-white">
+            Planning opslaan
+        </button>
+    </form>
 </div>
+
+<script>
+(function () {
+    const shiftSelect = document.getElementById('shiftSelect');
+
+    // Welke moment-namen horen bij welke shift
+    // LET OP: deze strings moeten matchen met jouw DB values in client_zorg_moments.moment
+    const allowedByShift = {
+        ochtend: ['ochtend', 'middag_1'],
+        avond: ['middag_2', 'avond'],
+        };
+
+
+    function normalize(s) {
+        return (s || '').toString().trim().toLowerCase();
+    }
+
+    function applyShiftFilter() {
+        const shift = shiftSelect.value;
+        const allowed = new Set((allowedByShift[shift] || []).map(normalize));
+
+        document.querySelectorAll('.visit-row').forEach(row => {
+            const moment = normalize(row.dataset.moment);
+
+            const checkbox = row.querySelector('.visit-checkbox');
+            const seqInput = row.querySelector('.visit-sequence');
+
+            const show = allowed.has(moment);
+
+            // Als moment niet toegestaan is: verbergen + uncheck + sequence resetten
+            if (!show) {
+                row.style.display = 'none';
+                if (checkbox.checked) {
+                    checkbox.checked = false;
+                }
+                seqInput.value = '';
+                seqInput.disabled = true;
+            } else {
+                row.style.display = 'flex';
+            }
+        });
+
+        // Na filteren opnieuw sequence nummers zetten
+        autoAssignSequences();
+    }
+
+    function autoAssignSequences() {
+        let n = 1;
+        document.querySelectorAll('.visit-row').forEach(row => {
+            if (row.style.display === 'none') return;
+
+            const checkbox = row.querySelector('.visit-checkbox');
+            const seqInput = row.querySelector('.visit-sequence');
+
+            if (checkbox.checked) {
+                seqInput.disabled = false;
+                seqInput.value = n;
+                n++;
+            } else {
+                seqInput.value = '';
+                seqInput.disabled = true;
+            }
+        });
+    }
+
+    // Events
+    shiftSelect.addEventListener('change', applyShiftFilter);
+
+    document.querySelectorAll('.visit-checkbox').forEach(cb => {
+        cb.addEventListener('change', autoAssignSequences);
+    });
+
+    // init on load
+    applyShiftFilter();
+})();
+</script>
 @endsection
