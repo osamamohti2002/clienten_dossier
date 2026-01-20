@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Client;
 use Illuminate\Http\Request;
+use App\Models\Report;
 
 class ZorgPersoneelController extends Controller
 {
@@ -37,10 +38,14 @@ class ZorgPersoneelController extends Controller
             'report' => 'required|string|min:5',
         ]);
 
-        // Voor nu: alleen testen dat POST binnenkomt
-        // Later vervangen we dit door echte database opslag.
+        Report::create([
+            'client_id' => $client->id,
+            'user_id'   => auth()->id(),
+            'report'    => $data['report'],
+        ]);
+
         return redirect()
             ->route('zorg.clients.reports', $client->id)
-            ->with('success', 'Rapportage ontvangen (test).');
+            ->with('success', 'Rapportage opgeslagen.');
     }
 }
