@@ -20,6 +20,14 @@
         </div>
     @endif
 
+    {{-- Terug --}}
+    <div class="mt-8">
+        <a href="{{ route('zorg.clients.index') }}"
+           class="text-gray-600 hover:text-gray-900">
+            ← Terug naar cliënten
+        </a>
+    </div>
+
     {{-- NIEUWE RAPPORTAGE --}}
     <div class="bg-white shadow rounded-lg p-6 mb-8">
         <h2 class="text-lg font-semibold text-gray-900 mb-3">
@@ -95,14 +103,6 @@
                 Nog geen rapportages voor deze cliënt.
             </div>
         @endforelse
-    </div>
-
-    {{-- Terug --}}
-    <div class="mt-8">
-        <a href="{{ route('zorg.clients.index') }}"
-           class="text-gray-600 hover:text-gray-900">
-            ← Terug naar cliënten
-        </a>
     </div>
 
 </div>
