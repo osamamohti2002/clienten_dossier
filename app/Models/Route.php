@@ -30,6 +30,6 @@ class Route extends Model
     // }
     public function visits()
     {
-        return $this->hasMany(ClientRoute::class);
+        return $this->hasMany(ClientRoute::class)->orderBy('sequence');
     }
 }

@@ -12,6 +12,8 @@ class ClientRoute extends Model
         'route_id',
         'client_id',
         'zorgpersoneel_id',
+        'client_zorg_moment_id',
+        'sequence',
         'start_time',
         'end_time',
     ];
@@ -29,5 +31,10 @@ class ClientRoute extends Model
     public function zorgpersoneel()
     {
         return $this->belongsTo(User::class, 'zorgpersoneel_id');
+    }
+
+    public function zorgMoment()
+    {
+        return $this->belongsTo(ClientZorgMoment::class, 'client_zorg_moment_id');
     }
 }

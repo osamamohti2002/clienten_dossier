@@ -149,8 +149,38 @@
                                 <ul class="space-y-2">
                                     @foreach($route->visits as $visit)
                                         <li class="flex justify-between text-sm text-gray-700">
-                                            <span>{{ $visit->client->name ?? 'Onbekend' }}</span>
-                                            <span class="text-gray-400">duur: nog niet ingevuld</span>
+                                            @php
+                                                $duurMin = $visit->zorgMoment?->duration_minutes;
+
+                                                // fallback: bereken uit start/end als duration ontbreekt
+                                                if (!$duurMin && $visit->start_time && $visit->end_time) {
+                                                    $duurMin = \Carbon\Carbon::parse($visit->start_time)
+                                                        ->diffInMinutes(\Carbon\Carbon::parse($visit->end_time));
+                                                }
+
+                                                $momentLabel = match($visit->zorgMoment?->moment) {
+                                                    'ochtend'  => 'Ochtend',
+                                                    'middag_1' => 'Eind ochtend',
+                                                    'middag_2' => 'Eind middag',
+                                                    'avond'    => 'Avond',
+                                                    default    => $visit->zorgMoment?->moment ?? 'Onbekend',
+                                                };
+                                            @endphp
+
+                                            <li class="flex justify-between text-sm text-gray-700">
+                                                <span>
+                                                    {{ $visit->client->name ?? $visit->client->naam ?? 'Onbekend' }}
+                                                    <span class="text-gray-400">({{ $momentLabel }})</span>
+                                                </span>
+
+                                                <span class="text-gray-500">
+                                                    {{ $visit->start_time ? \Carbon\Carbon::parse($visit->start_time)->format('H:i') : '--:--' }}
+                                                    -
+                                                    {{ $visit->end_time ? \Carbon\Carbon::parse($visit->end_time)->format('H:i') : '--:--' }}
+                                                    • duur: <span class="font-medium text-gray-700">{{ $duurMin ?? 0 }} min</span>
+                                                </span>
+                                            </li>
+
                                         </li>
                                     @endforeach
                                 </ul>
