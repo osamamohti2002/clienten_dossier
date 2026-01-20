@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\Zorg\MeasurementController;
 
 use App\Http\Controllers\Planner\ClientController as PlannerClientController;
 use App\Http\Controllers\Planner\RouteController as PlannerRouteController;
@@ -98,4 +99,23 @@ Route::middleware(['role:zorgpersoneel'])->group(function () {
     // Verwijderen (alleen eigen rapportage)
     Route::delete('/zorg/reports/{report}', [ReportController::class, 'destroy'])
         ->name('zorg.reports.destroy');
+
+    Route::get('/zorg/clients/{client}/measurements', [MeasurementController::class, 'index'])
+        ->name('zorg.measurements.index');
+
+    Route::get('/zorg/clients/{client}/measurements/create', [MeasurementController::class, 'create'])
+        ->name('zorg.measurements.create');
+
+    Route::post('/zorg/clients/{client}/measurements', [MeasurementController::class, 'store'])
+        ->name('zorg.measurements.store');
+
+    // later: edit/update/delete (alleen eigen)
+    Route::get('/zorg/measurements/{measurement}/edit', [MeasurementController::class, 'edit'])
+        ->name('zorg.measurements.edit');
+
+    Route::put('/zorg/measurements/{measurement}', [MeasurementController::class, 'update'])
+        ->name('zorg.measurements.update');
+
+    Route::delete('/zorg/measurements/{measurement}', [MeasurementController::class, 'destroy'])
+        ->name('zorg.measurements.destroy');
 });

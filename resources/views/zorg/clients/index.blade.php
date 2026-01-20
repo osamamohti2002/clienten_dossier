@@ -89,7 +89,7 @@
                             </a>
 
                             {{-- Metingen (placeholder) --}}
-                            <a href="#"
+                            <a href="{{ route('zorg.measurements.create', $client) }}"
                                class="inline-flex items-center px-3 py-1.5 rounded-md
                                       border border-green-300 text-green-700
                                       bg-green-50 hover:bg-green-100">
