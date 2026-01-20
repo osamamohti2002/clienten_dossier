@@ -1,0 +1,49 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+{
+    Schema::create('measurements', function (Blueprint $table) {
+        $table->id();
+
+        $table->foreignId('client_id')->constrained()->cascadeOnDelete();
+        $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+
+        // type: weight, blood_pressure, temperature, blood_sugar
+        $table->string('type');
+
+        // Gewicht
+        $table->decimal('weight_kg', 5, 2)->nullable();   // bv 72.50
+        $table->unsignedSmallInteger('height_cm')->nullable(); // bv 175
+
+        // Bloeddruk
+        $table->unsignedSmallInteger('systolic')->nullable();  // bovendruk
+        $table->unsignedSmallInteger('diastolic')->nullable(); // onderdruk
+        $table->unsignedSmallInteger('heart_rate')->nullable(); // hartslag
+
+        // Temperatuur
+        $table->decimal('temperature_c', 4, 1)->nullable(); // bv 36.8
+
+        // Bloedsuiker
+        $table->decimal('blood_sugar', 4, 1)->nullable(); // bv 5.6 (mmol/L)
+
+        $table->timestamps();
+    });
+}
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('measurements');
+    }
+};
