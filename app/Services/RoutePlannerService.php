@@ -23,13 +23,19 @@ class RoutePlannerService
         // 2. Startmoment
         $current = Carbon::parse($data['datum'] . ' ' . $data['starttijd']);
 
+        // ✅ reistijd tussen cliënten (minuten)
+        $travelMinutesBetweenClients = 10;
+
         // 3. Clients + zorgmomenten
         $clients = Client::with('zorgMomenten')
             ->whereIn('id', $data['clients'])
             ->get()
             ->keyBy('id');
 
-        foreach ($data['clients'] as $clientId) {
+        $clientIds = $data['clients'];
+        $lastIndex = count($clientIds) - 1;
+
+        foreach ($clientIds as $index => $clientId) {
             $client = $clients->get($clientId);
 
             // 4. Zorgduur bepalen
@@ -56,11 +62,15 @@ class RoutePlannerService
                 'zorgpersoneel_id' => $data['zorgpersoneel_id'],
             ]);
 
-            // 7. Volgende client start na deze
-            $current = $visitEnd;
+            // 7. Volgende client start na deze (+ reistijd), behalve na de laatste client
+            if ($index !== $lastIndex) {
+                $current = $visitEnd->copy()->addMinutes($travelMinutesBetweenClients);
+            } else {
+                $current = $visitEnd; // laatste client: geen reistijd meer
+            }
         }
 
-        // 8. Eindtijd opslaan
+        // 8. Eindtijd opslaan (einde laatste bezoek)
         $route->update([
             'eindtijd' => $current->format('H:i:s'),
         ]);
