@@ -9,14 +9,7 @@ class Report extends Model
     protected $fillable = [
         'client_id',
         'user_id',
-        'type',
-        'weight_kg',
-        'height_cm',
-        'systolic',
-        'diastolic',
-        'heart_rate',
-        'temperature_c',
-        'blood_sugar',
+        'report',
     ];
 
     public function client()
