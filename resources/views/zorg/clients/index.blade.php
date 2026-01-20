@@ -47,21 +47,18 @@
 
                 <tbody class="bg-white divide-y divide-gray-200">
                 @forelse($clients as $client)
+                    @php
+                        $gender = $client->gender ?? 'unknown';
+                        $genderBg = $gender === 'male' ? 'bg-blue-100' : ($gender === 'female' ? 'bg-pink-100' : 'bg-gray-100');
+                        $genderIcon = $gender === 'male' ? 'fa-mars text-blue-600' : ($gender === 'female' ? 'fa-venus text-pink-600' : 'fa-user text-gray-500');
+                    @endphp
+
                     <tr>
                         <td class="px-6 py-4">
                             <div class="flex items-center">
-
                                 {{-- Gender icon --}}
-                                <div class="h-10 w-10 flex-shrink-0 rounded-full flex items-center justify-center
-                                    @if($client->gender === 'male') bg-blue-100
-                                    @elseif($client->gender === 'female') bg-pink-100
-                                    @else bg-gray-100 @endif
-                                ">
-                                    <i class="fa
-                                        @if($client->gender === 'male') fa-mars text-blue-600
-                                        @elseif($client->gender === 'female') fa-venus text-pink-600
-                                        @else fa-user text-gray-500 @endif
-                                    "></i>
+                                <div class="h-10 w-10 flex-shrink-0 rounded-full flex items-center justify-center {{ $genderBg }}">
+                                    <i class="fa {{ $genderIcon }}"></i>
                                 </div>
 
                                 {{-- Name + BSN --}}
@@ -85,19 +82,19 @@
                         </td>
 
                         <td class="px-6 py-4 text-sm font-medium whitespace-nowrap">
-                            <a href="{{ route('zorg.clients.reports', $client->id) }}"
-                                class="inline-flex items-center px-3 py-1.5 rounded-md
-                                       border border-blue-300 text-blue-700
-                                       bg-blue-50 hover:bg-blue-100 mr-2">
-                                 <i class="fa fa-file-text mr-2"></i>Rapportage
-                             </a>
+                            {{-- Rapportage --}}
+                            <a href="{{ route('zorg.reports.index', $client) }}"
+                                class="inline-flex items-center px-3 py-1.5 rounded-md border border-blue-300 text-blue-700 bg-blue-50 hover:bg-blue-100 mr-2">
+                                    <i class="fa fa-file-text mr-2"></i>Rapportage
+                            </a>
 
-                             <a href="#"
-                             class="inline-flex items-center px-3 py-1.5 rounded-md
-                                    border border-green-300 text-green-700
-                                    bg-green-50 hover:bg-green-100">
-                              <i class="fa fa-heartbeat mr-2"></i>Metingen
-                          </a>
+                            {{-- Metingen (placeholder) --}}
+                            <a href="#"
+                               class="inline-flex items-center px-3 py-1.5 rounded-md
+                                      border border-green-300 text-green-700
+                                      bg-green-50 hover:bg-green-100">
+                                <i class="fa fa-heartbeat mr-2"></i>Metingen
+                            </a>
                         </td>
                     </tr>
                 @empty

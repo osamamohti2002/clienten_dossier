@@ -12,13 +12,11 @@ class Report extends Model
         'report',
     ];
 
-    // Relatie naar cliënt
     public function client()
     {
         return $this->belongsTo(Client::class);
     }
 
-    // Relatie naar zorgpersoneel (user)
     public function user()
     {
         return $this->belongsTo(User::class);
