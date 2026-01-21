@@ -101,10 +101,10 @@
                                         Dossier
                                     </a>
 
-                                    <a href="#"
-                                       class="inline-flex items-center px-3 py-1.5
-                                              border border-green-300 text-sm font-medium
-                                              rounded-md text-green-700 bg-green-50 hover:bg-green-100">
+                                   <a href="{{ route('zorg.reports.index', ['client' => $visit->client->id]) }}"
+                                    class="inline-flex items-center px-3 py-1.5
+                                            border border-green-300 text-sm font-medium
+                                            rounded-md text-green-700 bg-green-50 hover:bg-green-100">
                                         <i class="fa fa-heartbeat mr-1.5"></i>
                                         Rapportage
                                     </a>
