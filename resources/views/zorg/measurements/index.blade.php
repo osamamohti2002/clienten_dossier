@@ -39,6 +39,11 @@
         @forelse($measurements as $measurement)
 
             @php
+                // Fallbacks zodat er nooit "undefined variable" is
+                $label = 'Onbekend';
+                $badgeBg = 'bg-gray-100 text-gray-800';
+                $icon = 'fa-stethoscope';
+
                 switch ($measurement->type) {
                     case 'weight':
                         $label = 'Gewicht';
@@ -78,8 +83,11 @@
                         </div>
 
                         <div class="text-xs text-gray-500 mt-1">
-                            {{ $measurement->created_at->format('d-m-Y H:i') }}
-                            · door {{ $measurement->user->name }}
+                            {{ optional($measurement->created_at)->format('d-m-Y H:i') }}
+                            · door {{ $measurement->user->name ?? 'Onbekend' }}
+                            @if($measurement->user_id === auth()->id())
+                                <span class="ml-2 px-2 py-0.5 rounded-full bg-gray-100 text-gray-700"></span>
+                            @endif
                         </div>
                     </div>
 
@@ -91,16 +99,12 @@
                                 Bewerken
                             </a>
 
-                            <form method="POST"
-                                  action="{{ route('zorg.measurements.destroy', $measurement) }}"
-                                  onsubmit="return confirm('Meting verwijderen?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit"
-                                        class="text-red-600 hover:text-red-900">
-                                    Verwijderen
-                                </button>
-                            </form>
+                            <button type="button"
+                                    class="text-red-600 hover:text-red-900 delete-btn"
+                                    data-url="{{ route('zorg.measurements.destroy', $measurement) }}"
+                                    data-label="{{ $label }}">
+                                Verwijderen
+                            </button>
                         </div>
                     @endif
                 </div>
@@ -108,19 +112,22 @@
                 {{-- Waarden --}}
                 <div class="mt-4 text-sm text-gray-700 space-y-1">
                     @if($measurement->type === 'weight')
-                        <div> Gewicht: <strong>{{ $measurement->weight_kg }} kg</strong></div>
-                        <div> Lengte: <strong>{{ $measurement->height_cm }} cm</strong></div>
+                        <div>Gewicht: <strong>{{ $measurement->weight_kg ?? '—' }} kg</strong></div>
+                        <div>Lengte: <strong>{{ $measurement->height_cm ?? '—' }} cm</strong></div>
 
                     @elseif($measurement->type === 'blood_pressure')
-                        <div> Bovendruk: <strong>{{ $measurement->systolic }}</strong></div>
-                        <div> Onderdruk: <strong>{{ $measurement->diastolic }}</strong></div>
-                        <div> Hartslag: <strong>{{ $measurement->heart_rate }}</strong></div>
+                        <div>Bovendruk: <strong>{{ $measurement->systolic ?? '—' }}</strong></div>
+                        <div>Onderdruk: <strong>{{ $measurement->diastolic ?? '—' }}</strong></div>
+                        <div>Hartslag: <strong>{{ $measurement->heart_rate ?? '—' }}</strong></div>
 
                     @elseif($measurement->type === 'temperature')
-                        <div> Temperatuur: <strong>{{ $measurement->temperature_c }} °C</strong></div>
+                        <div>Temperatuur: <strong>{{ $measurement->temperature_c ?? '—' }} °C</strong></div>
 
                     @elseif($measurement->type === 'blood_sugar')
-                        <div> Bloedsuiker: <strong>{{ $measurement->blood_sugar }}</strong></div>
+                        <div>Bloedsuiker: <strong>{{ $measurement->blood_sugar ?? '—' }}</strong></div>
+
+                    @else
+                        <div class="text-gray-500">Geen details beschikbaar.</div>
                     @endif
                 </div>
 
@@ -133,4 +140,69 @@
     </div>
 
 </div>
+
+<!-- ===== Delete Modal (popup) ===== -->
+<div id="deleteModal" class="fixed inset-0 hidden items-center justify-center bg-black/50 z-50">
+    <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
+        <h2 class="text-lg font-semibold text-gray-900 mb-2">Bevestigen</h2>
+
+        <p class="text-gray-700 mb-6">
+            Weet je zeker dat je deze meting (<span id="deleteMeasurementLabel" class="font-semibold"></span>) wilt verwijderen?
+        </p>
+
+        <div class="flex justify-end gap-3">
+            <button type="button"
+                    class="px-4 py-2 rounded-md border"
+                    onclick="closeDeleteModal()">
+                Annuleren
+            </button>
+
+            <button type="button"
+                    class="px-4 py-2 rounded-md text-white bg-red-600 hover:bg-red-700"
+                    onclick="confirmDelete()">
+                Ja, verwijderen
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Hidden delete form (1x) -->
+<form id="deleteForm" method="POST" class="hidden">
+    @csrf
+    @method('DELETE')
+</form>
+
+<script>
+    let deleteUrl = '';
+
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                deleteUrl = this.dataset.url;
+                document.getElementById('deleteMeasurementLabel').textContent = this.dataset.label ?? 'meting';
+
+                const modal = document.getElementById('deleteModal');
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            });
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeDeleteModal();
+        });
+    });
+
+    function closeDeleteModal() {
+        const modal = document.getElementById('deleteModal');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        deleteUrl = '';
+    }
+
+    function confirmDelete() {
+        const form = document.getElementById('deleteForm');
+        form.action = deleteUrl;
+        form.submit();
+    }
+</script>
 @endsection
