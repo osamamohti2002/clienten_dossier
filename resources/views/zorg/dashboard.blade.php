@@ -3,7 +3,7 @@
 @section('content')
 
 @php
-    // Shift styling helper (same style as planner dashboard)
+    
     $shiftBadge = function ($shift) {
         return match($shift) {
             'ochtend' => [
@@ -32,7 +32,7 @@
 
     <!-- Titel -->
     <div class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-900">Zorgpersoneel Dashboard</h1>
+        <h1 class="text-3xl font-bold text-gray-900">Zorgpersoneel Dashboard.</h1>
         <p class="text-gray-600 mt-2">Overzicht van jouw planning en cliënten</p>
     </div>
 
