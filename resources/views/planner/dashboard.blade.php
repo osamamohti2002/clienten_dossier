@@ -25,6 +25,7 @@
                     {{ $routesTodayCount ?? 0 }}
                 </div>
             </div>
+            
             <div class="bg-white shadow rounded-lg px-4 py-3 text-center">
                 <div class="text-xs text-gray-500">Cliënten totaal</div>
                 <div class="text-2xl font-bold text-gray-900">
