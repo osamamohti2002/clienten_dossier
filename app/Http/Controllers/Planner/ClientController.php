@@ -26,7 +26,27 @@ class ClientController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'bsn' => 'required|string|max:255|unique:clients,bsn',
+            'bsn' => [
+                'required',
+                'string',
+                'size:9', // Exact 9 karakters
+                'regex:/^[0-9]{8,9}$/', // Alleen cijfers
+                'unique:clients,bsn,' . ($client->id ?? 'NULL'),
+                function ($attribute, $value, $fail) {
+                    // 11-proef voor BSN
+                    if (strlen($value) === 9) {
+                        $sum = 0;
+                        for ($i = 0; $i < 8; $i++) {
+                            $sum += (9 - $i) * intval($value[$i]);
+                        }
+                        $sum -= intval($value[8]);
+                        
+                        if ($sum % 11 !== 0) {
+                            $fail('BSN is niet geldig.');
+                        }
+                    }
+                },
+            ],
             'phone' => 'nullable|string|max:50',
             'address' => 'nullable|string|max:255',
             'gender' => 'nullable|in:male,female,unknown',

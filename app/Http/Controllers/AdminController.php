@@ -124,7 +124,9 @@ class AdminController extends Controller
             'password' => 'nullable|string|max:20',
         ]);
 
-        if (empty($data['password'])) {
+        if (!empty($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        } else {
             unset($data['password']);
         }
 

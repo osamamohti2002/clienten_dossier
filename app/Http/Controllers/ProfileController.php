@@ -34,6 +34,16 @@ class ProfileController extends Controller
             'password' => 'nullable|string|min:8|confirmed',
         ]);
 
+        if ($request->filled('current_password')) {
+            if (!Hash::check($request->current_password, $user->password)) {
+                return back()->withErrors(['current_password' => 'Huidig wachtwoord is onjuist']);
+            }
+        }
+
+        if ($request->filled('password') && !$request->filled('current_password')) {
+            return back()->withErrors(['current_password' => 'Huidig wachtwoord is verplicht om nieuw wachtwoord in te stellen']);
+        }
+
         // Restrict non-admin users to only update avatar and password
         if ($user->role->name !== 'admin') {
             // Only allow avatar and password updates for non-admins
@@ -57,7 +67,8 @@ class ProfileController extends Controller
         if ($request->hasFile('avatar')) {
             // Delete old avatar if exists
             if ($user->avatar) {
-                Storage::disk('public')->delete($user->avatar);
+                $path = str_replace('storage/', '', $user->avatar);
+                Storage::disk('public')->delete($path);
             }
 
             // Slaat op in storage/app/public/media/avatars
@@ -70,14 +81,6 @@ class ProfileController extends Controller
             $user->name = $request->name;
             $user->email = $request->email;
             $user->phone = $request->phone;
-        }
-
-        // Update password (allowed for all)
-        if ($request->filled('password')) {
-            if (!Hash::check($request->current_password, $user->password)) {
-                return back()->withErrors(['current_password' => 'Current password is incorrect']);
-            }
-            $user->password = Hash::make($request->password);
         }
 
         $user->save();
