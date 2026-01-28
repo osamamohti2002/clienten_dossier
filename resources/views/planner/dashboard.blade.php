@@ -64,15 +64,24 @@
             <div class="flex flex-col md:flex-row md:items-center md:justify-between">
                 <div class="mb-4 md:mb-0">
                     <label for="route-date-filter" class="block text-sm font-medium text-gray-700">Filter op datum</label>
-                    <input type="date" id="route-date-filter"
-                           class="mt-1 block w-full md:w-auto border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    <input
+                        type="date"
+                        id="route-date-filter"
+                        name="datum"
+                        value="{{ $selectedDate ?? '' }}"
+                        class="mt-1 block w-full md:w-auto border border-gray-300 rounded-md shadow-sm"
+                    />
+
                 </div>
 
                 <div>
-                    <button type="button"
-                            class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                    <button
+                        type="button"
+                        onclick="filterRoutesByDate()"
+                        class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
                         <i class="fa fa-history mr-2"></i>Oude routes bekijken
                     </button>
+
                 </div>
             </div>
         </div>
@@ -207,4 +216,18 @@
         el.classList.toggle('hidden');
     }
 </script>
+
+<script>
+function filterRoutesByDate() {
+    const date = document.getElementById('route-date-filter').value;
+
+    if (!date) {
+        alert('Selecteer eerst een datum');
+        return;
+    }
+
+    window.location.href = `{{ route('planner.dashboard') }}?datum=${date}`;
+}
+</script>
+
 @endsection

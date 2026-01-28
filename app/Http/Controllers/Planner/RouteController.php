@@ -17,13 +17,21 @@ use function Symfony\Component\Clock\now;
 class RouteController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $routes = Route::with([
-                'zorgpersoneel.user',
-                'visits.client',
-                'visits.zorgMoment',   // ✅ deze toevoegen
-            ])
+        $selectedDate = $request->query('datum');
+
+        $routesQuery = Route::with([
+            'zorgpersoneel.user',
+            'visits.client',
+            'visits.zorgMoment',
+        ]);
+
+        if ($selectedDate) {
+            $routesQuery->whereDate('datum', $selectedDate);
+        }
+
+        $routes = $routesQuery
             ->orderBy('datum', 'desc')
             ->orderByRaw("FIELD(shift,'ochtend','avond')")
             ->get();
@@ -31,7 +39,12 @@ class RouteController extends Controller
         $routesTodayCount = Route::whereDate('datum', Carbon::today())->count();
         $clientsCount = Client::count();
 
-        return view('planner/dashboard', compact('routes', 'routesTodayCount', 'clientsCount'));
+        return view('planner/dashboard', compact(
+            'routes',
+            'routesTodayCount',
+            'clientsCount',
+            'selectedDate'
+        ));
     }
 
 
