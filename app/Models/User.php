@@ -14,8 +14,8 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     // Soft Deletes
-    use SoftDeletes;
-    protected $dates = ['deleted_at'];
+    // use SoftDeletes;
+    // protected $dates = ['deleted_at'];
 
     /**
      * The attributes that are mass assignable.
