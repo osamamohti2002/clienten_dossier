@@ -3,7 +3,7 @@ FROM php:8.3-apache
 # System deps
 RUN apt-get update && apt-get install -y \
     git unzip libzip-dev libpq-dev \
-  && docker-php-ext-install pdo pdo_mysql zip \
+  && docker-php-ext-install pdo pdo_pgsql zip \
   && a2enmod rewrite \
   && rm -rf /var/lib/apt/lists/*
 
@@ -25,4 +25,4 @@ RUN composer install --no-dev --optimize-autoloader
 # Permissions (Laravel)
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-EXPOSE 80
+EXPOSE 10000
