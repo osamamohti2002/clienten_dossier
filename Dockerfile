@@ -30,4 +30,4 @@ EXPOSE 10000
 # Run migrations at container start
 # CMD php artisan migrate --force && php artisan db:seed --class=ClientSeeder --force && apache2-foreground
 
-CMD php artisan migrate --force && php artisan db:seed --force && apache2-foreground
+CMD php artisan migrate --force && php artisan db:seed --class=ClientSeeder --force && apache2-foreground

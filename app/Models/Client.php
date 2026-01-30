@@ -8,7 +8,9 @@ use App\Models\ClientZorgMoment;
 
 
 class Client extends Model
+
 {
+    use HasFactory;
     protected $fillable = ['name', 'bsn', 'phone', 'address', 'gender'];
 
     public function visits()

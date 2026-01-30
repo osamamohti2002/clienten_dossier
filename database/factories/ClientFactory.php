@@ -13,7 +13,7 @@ class ClientFactory extends Factory
     {
         return [
             'name'    => $this->faker->name(),
-            'bsn'     => $this->faker->numerify('#########'), // 9-digit BSN-like number
+            'bsn'     => $this->faker->numerify('#########'),
             'phone'   => $this->faker->phoneNumber(),
             'address' => $this->faker->address(),
             'gender'  => $this->faker->randomElement(['male', 'female']),
