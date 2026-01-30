@@ -11,13 +11,14 @@ class ClientFactory extends Factory
 
     public function definition(): array
     {
-        return [
-            'name'    => fake()->name(),
-            'bsn'     => fake()->numerify('#########'),
-            'phone'   => fake()->phoneNumber(),
-            'address' => fake()->address(),
-            'gender'  => fake()->randomElement(['male', 'female']),
+        $faker = \Faker\Factory::create();
 
+        return [
+            'name'    => $faker->name,
+            'bsn'     => $faker->numerify('#########'),
+            'phone'   => $faker->phoneNumber,
+            'address' => $faker->address,
+            'gender'  => $faker->randomElement(['male', 'female']),
         ];
     }
 }
