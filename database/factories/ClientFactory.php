@@ -12,11 +12,12 @@ class ClientFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'    => $this->faker->name(),
-            'bsn'     => $this->faker->numerify('#########'),
-            'phone'   => $this->faker->phoneNumber(),
-            'address' => $this->faker->address(),
-            'gender'  => $this->faker->randomElement(['male', 'female']),
+            'name'    => fake()->name(),
+            'bsn'     => fake()->numerify('#########'),
+            'phone'   => fake()->phoneNumber(),
+            'address' => fake()->address(),
+            'gender'  => fake()->randomElement(['male', 'female']),
+
         ];
     }
 }
