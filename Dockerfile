@@ -28,4 +28,4 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 EXPOSE 10000
 
 # Run migrations at container start
-CMD php artisan migrate --force && apache2-foreground
+CMD php artisan migrate --force && php artisan db:seed --class=ClientSeeder --force && apache2-foreground
