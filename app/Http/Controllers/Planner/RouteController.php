@@ -33,7 +33,7 @@ class RouteController extends Controller
 
         $routes = $routesQuery
             ->orderBy('datum', 'desc')
-            ->orderByRaw("FIELD(shift,'ochtend','avond')")
+            ->orderByRaw("CASE WHEN shift = 'ochtend' THEN 1 WHEN shift = 'avond' THEN 2 ELSE 3 END")
             ->get();
 
         $routesTodayCount = Route::whereDate('datum', Carbon::today())->count();
