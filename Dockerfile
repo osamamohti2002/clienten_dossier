@@ -26,3 +26,6 @@ RUN composer install --no-dev --optimize-autoloader
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
 EXPOSE 10000
+
+# Run migrations at container start
+CMD php artisan migrate --force && apache2-foreground
