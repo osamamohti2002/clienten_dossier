@@ -17,6 +17,8 @@ class DatabaseSeeder extends Seeder
     {
 
         $this->call(RoleSeeder::class);
+        $this->call(AdminUserSeeder::class);
+
         // User::factory(10)->create();
 
         // User::facgottory()->create([
